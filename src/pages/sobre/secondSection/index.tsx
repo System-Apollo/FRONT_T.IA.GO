@@ -26,7 +26,7 @@ export default function SecondSection () {
                 <div className="mt-5 items-center justify-center gap-3 sm:flex">
                     <a 
                         href="javascript:void()"
-                        className="block w-full mt-2 py-2.5 px-8 text-blue-700 hover:text-blue-600 bg-white rounded-md font-medium duration-150 hover:bg-gray-100 sm:w-auto"
+                        className="block w-full mt-2 py-2.5 px-8 text-blue-700 hover:text-blue-500 bg-indigo-50 rounded-md font-medium duration-150 sm:w-auto"
                     >
                         Conhecer planos
                     </a>
