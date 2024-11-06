@@ -16,10 +16,10 @@ export default function SecondSection () {
             
             <div className="max-w-xl mx-auto text-center relative z-10">
                 <div className="py-4">
-                    <h3 className="text-3xl text-gray-200 font-semibold md:text-4xl">
+                    <h3 className="text-3xl text-indigo-50 font-semibold md:text-4xl">
                         Jurídico orientado a objetos
                     </h3>
-                    <p className="text-gray-300 leading-relaxed mt-3">
+                    <p className="text-indigo-50 leading-relaxed mt-3">
                         Com nossa inteligência artificial generativa, você tem acesso às analises, reports e acompanhamentos dos seus processos, dando assertividade e agilidade para as tomadas de decisões.
                     </p>
                 </div>

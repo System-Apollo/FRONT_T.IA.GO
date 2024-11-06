@@ -25,7 +25,7 @@ export default function Initial () {
                             {/* <h1 className="text-sm text-indigo-600 font-medium">
                                 Over 200 successful deals
                             </h1> */}
-                            <h2 className="text-4xl text-indigo-200 font-medium md:text-5xl">
+                            <h2 className="text-4xl text-indigo-50 font-medium md:text-5xl">
                                 Seu assistente inteligente para potenciar suas análises
                             </h2>
                             <p className="text-gradient">
@@ -34,7 +34,7 @@ export default function Initial () {
                                 <a href="javascript:void(0)" className="block py-2 px-4 text-center text-white font-medium bg-blue-700 duration-150 hover:bg-blue-600 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none">
                                     Cadastrar
                                 </a>
-                                <a href="javascript:void(0)" className="flex items-center justify-center bg-indigo-200 text-blue-700 gap-x-2 py-2 px-4 hover:text-blue-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex">
+                                <a href="javascript:void(0)" className="flex items-center justify-center bg-indigo-50 text-blue-700 gap-x-2 py-2 px-4 hover:text-blue-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex">
                                     Conversar com Tiago
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                                         <path fillRule="evenodd" d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z" clipRule="evenodd" />
