@@ -5,19 +5,55 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;700&display=swap');
 
 :root {
-  --background: #ffffff;
+  --background-solid: #f6f6f6;
+  --background-gradient: linear-gradient(45deg, #020204, #070632);
   --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #f6f6f6;
+    --background-solid: #f6f6f6;
     --foreground: #ededed;
+    --fontColor: linear-gradient(to bottom, #8AAAE8 0%, #043B98 100%);
   }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
   font-family: 'Inter';
+}
+
+.bg-solid {
+  background: var(--background-solid);
+}
+
+.bg-gradient {
+  background: var(--background-gradient);
+}
+
+.text-gradient {
+  color: linear-gradient(45deg, #020204, #070632);
+}
+
+.text-gradient {
+  background: var(--fontColor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
