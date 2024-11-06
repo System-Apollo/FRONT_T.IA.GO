@@ -18,8 +18,8 @@ export default function Navbar () {
                     <div className="flex justify-between w-full md:w-auto">
                         <a href="javascript:void(0)">
                             <img
-                                src="https://www.floatui.com/logo.svg"
-                                width={120}
+                                src="/mfdigitallaw.svg"
+                                width={150}
                                 height={50}
                                 alt="Float UI logo"
                             />
