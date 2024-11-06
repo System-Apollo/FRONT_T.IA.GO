@@ -5,20 +5,15 @@ export default function SecondSection () {
         <section className="py-28 w-full">
             <div className="max-w-screen-xl mx-auto px-4 md:text-center md:px-8">
                 <div className="max-w-xl space-y-3 md:mx-auto">
-                    <h3 className="text-indigo-600 font-semibold">
-                        Professional services
+                    <h3 className="text-gradient font-semibold">
+                        Praticidade
                     </h3>
                     <p className="text-gray-800 text-3xl font-semibold sm:text-4xl">
-                        Build the future with us
+                        Otimize sua análise de dados
                     </p>
                     <p className="text-gray-600">
-                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat non proident.
+                    Conectando-se diretamente à base de dados da sua empresa ou setor, possibilitando analises de forma ágil e acessível, além de gerar gráficos e relatórios para suporte na tomada de decisão.
                     </p>
-                </div>
-                <div className="mt-4">
-                    <a href="javascript:void(0)" className="inline-block py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-lg shadow-md hover:shadow-none">
-                        Get started
-                    </a>
                 </div>
                 <div className="flex justify-center items-center mt-20">
                     <Image src={'/graphicframe.svg'} width={550} height={250} alt="logo" />
