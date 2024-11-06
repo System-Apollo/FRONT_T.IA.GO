@@ -1,9 +1,15 @@
 import { ChevronDown } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function Navbar () {
 
-    const [state, setState] = useState(false)
+    const [state, setState] = useState(false);
+        const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        setIsVisible(true);
+    }, []);
     
     const navigation = [
         { title: "Partners", path: "javascript:void(0)" },
@@ -14,7 +20,10 @@ export default function Navbar () {
 
     return (
         <>
-                <nav className="relative flex items-center justify-between w-full pt-5 px-4 mx-auto max-w-screen-xl sm:px-8 md:space-x-6">
+                <nav className={`relative flex items-center justify-between w-full pt-5 px-4 mx-auto max-w-screen-xl sm:px-8 md:space-x-6 transform transition-all duration-700 ease-in-out ${
+                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                    }`}
+                >
                     <div className="flex justify-between w-full md:w-auto">
                         <a href="javascript:void(0)">
                             <img
