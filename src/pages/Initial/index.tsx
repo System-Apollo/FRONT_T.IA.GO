@@ -1,8 +1,16 @@
 import Navbar from "@/compotents/Navbar"
 import { ChevronDown } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function Initial () {
+
+    const [state, setState] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        setIsVisible(true);
+    }, []);
 
     return (
         <>
@@ -10,7 +18,10 @@ export default function Initial () {
                 <Navbar/>
                 <section className="py-28 w-full">
                     <div className="max-w-screen-xl mx-auto text-gray-600 gap-x-12 items-center justify-between overflow-hidden md:flex md:px-8">
-                        <div className="flex-none space-y-5 px-4 sm:max-w-lg md:px-0 lg:max-w-xl">
+                        <div className={`flex-none space-y-5 px-4 sm:max-w-lg md:px-0 lg:max-w-xl transform transition-all duration-700 ease-in-out ${
+                                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                            }`}
+                        >
                             {/* <h1 className="text-sm text-indigo-600 font-medium">
                                 Over 200 successful deals
                             </h1> */}
@@ -31,12 +42,18 @@ export default function Initial () {
                                 </a>
                             </div>
                         </div>
-                        <div className="flex items-center justify-center mt-14 md:mt-0 md:max-w-xl">
+                        <div className={`flex items-center justify-center mt-14 md:mt-0 md:max-w-xl transform transition-all duration-700 ease-in-out ${
+                                isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                            }`}
+                        >
                             <img src="/messageframe.svg" alt="Icon" className="w-3/4 h-1/4" />
 
                         </div>
                     </div>
-                    <div className="flex justify-center items-center mt-8 px-4 md:px-8">
+                    <div className={`flex justify-center items-center mt-8 px-4 md:px-8 transform transition-all duration-700 ease-in-out ${
+                            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                        }`}
+                    >
                         <button>
                             <ChevronDown className="w-6 h-6 text-gray-700" />
                         </button>
