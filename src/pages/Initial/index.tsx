@@ -3,9 +3,7 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 export default function Initial() {
-    const [state, setState] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
-    const sectionRef = useRef(null);
 
     useEffect(() => {
         setIsVisible(true);
@@ -14,11 +12,19 @@ export default function Initial() {
     return (
         <>
             <div className="relative w-full bg-gradient overflow-hidden">
-                <div className="absolute inset-0 bg-center bg-no-repeat bg-contain opacity-50 pointer-events-none"
-                     style={{
-                         backgroundImage: "url('/OvalBase.svg')",
-                         backgroundPosition: "left center",
-                     }}
+                <div
+                    className="md:absolute md:left-0 md:top-0 md:w-1/2 md:h-full md:bg-no-repeat md:bg-contain md:pointer-events-none"
+                    style={{
+                        backgroundImage: "url('/OvalBase.svg')",
+                        backgroundPosition: "left center",
+                    }}
+                ></div>
+                <div
+                    className="md:absolute md:right-20 md:bottom-0 md:w-1/5 md:h-2/6 md:bg-no-repeat md:bg-contain md:pointer-events-none"
+                    style={{
+                        backgroundImage: "url('/Bars.svg')",
+                        backgroundPosition: "right center",
+                    }}
                 ></div>
 
                 <Navbar />
