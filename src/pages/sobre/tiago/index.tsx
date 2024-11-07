@@ -35,7 +35,7 @@ export default function Tiago() {
             ref={sectionRef}
             className="bg-gradient w-full text-white py-20">
             <div className="max-w-6xl mx-auto px-4">
-                <div className="bg-gray-900 bg-opacity-50 border border-gray-700 rounded-lg p-10 flex flex-col md:flex-row items-center gap-6 md:gap-0 shadow-lg">
+                <div className="bg-gray-900 bg-opacity-50 border border-gray-700 rounded-lg p-10 flex flex-col lg:flex-row items-center gap-6 lg:gap-0 shadow-lg">
                     <div className={`flex-shrink-0 md:-translate-x-20 w-48 h-48 md:w-80 md:h-80 bg-none rounded-lg overflow-hidden flex items-center justify-center transform transition-all duration-700 ease-in-out ${
                         isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'
                     }`}>
