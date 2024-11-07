@@ -4,6 +4,7 @@ import Sobre from './sobre';
 import Solucoes from './solucoes';
 import Suporte from './suporte';
 import Footer from './footer';
+import Planos from './planos';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,6 +14,7 @@ export default function Home() {
       <Initial/>
       <Sobre/>
       <Solucoes/>
+      <Planos/>
       <Suporte/>
       <Footer/>
     </main>
