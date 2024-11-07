@@ -1,88 +1,94 @@
-import { ChevronDown } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import React, { useState, useEffect } from 'react';
 
-export default function Navbar () {
+const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-    const [state, setState] = useState(false);
-        const [isVisible, setIsVisible] = useState(false);
-    const sectionRef = useRef(null);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768); 
+    };
 
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
-    
-    const navigation = [
-        { title: "Partners", path: "javascript:void(0)" },
-        { title: "Customers", path: "javascript:void(0)" },
-        { title: "Team", path: "javascript:void(0)" },
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-    ]
+  const toggleMenu = () => {
+    if (isSmallScreen) {
+      setIsOpen(!isOpen);
+    }
+  };
 
-    return (
-        <>
-                <nav className={`relative flex items-center justify-between w-full pt-5 px-4 mx-auto max-w-screen-xl sm:px-8 md:space-x-6 transform transition-all duration-700 ease-in-out ${
-                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-                    }`}
-                >
-                    <div className="flex justify-between w-full md:w-auto">
-                        <a href="javascript:void(0)">
-                            <img
-                                src="/mfdigitallaw.svg"
-                                width={150}
-                                height={50}
-                                alt="Float UI logo"
-                            />
-                        </a>
-                        <button
-                            className="text-gray-500 outline-none md:hidden"
-                            onClick={() => setState(!state)}
-                        >
-                            {state ? (
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            ) : (
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-6 w-6"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
-                            )}
-                        </button>
-                    </div>
+  return (
+    <nav className="bg-none fixed w-full z-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 py-4 flex justify-between items-center h-16">
+        {/* Logo */}
+        <div className="flex-shrink-0">
+          <img src="/mfdigitallaw.svg" alt="Logo" className="h-8 w-8" />
+        </div>
 
-                    <ul
-                        className={`flex items-center justify-end gap-6 md:text-sm md:font-medium md:flex md:mt-0 ${
-                            state ? 'absolute inset-x-0 px-4 border-b bg-white md:border-none md:static' : 'hidden'
-                        }`}
-                    >
-                        <div className="flex flex-col md:flex-row items-center space-y-5 mt-4 md:space-y-0 md:space-x-6">
-                            {navigation.map((item, idx) => (
-                                <li className="text-gray-500 hover:text-indigo-600" key={idx}>
-                                    <a href={item.path}>{item.title}</a>
-                                </li>
-                            ))}
-                        </div>
-                        <li className="py-5 md:py-0">
-                            <a
-                                href="javascript:void(0)"
-                                className="py-2 px-5 rounded-lg font-medium text-white text-center bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 duration-150 block md:py-3 md:inline"
-                            >
-                                Get started
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-        </>
-    )
-}
+        {/* Navegação em telas grandes com espaçamento adicional */}
+        <div className="hidden md:flex space-x-8 lg:space-x-16">
+          <a href="#home" className="text-gray-300 hover:text-blue-500 px-4">
+            Home
+          </a>
+          <a href="#services" className="text-gray-300 hover:text-blue-500 px-4">
+            Serviços
+          </a>
+          <a href="#about" className="text-gray-300 hover:text-blue-500 px-4">
+            Sobre
+          </a>
+          <a href="#contact" className="text-gray-300 hover:text-blue-500 px-4">
+            Contato
+          </a>
+        </div>
+
+        {/* Botão em telas grandes */}
+        <div className="hidden md:flex ml-4">
+            <button className="bg-blue-500 text-white bg-blue-700 duration-150 hover:bg-blue-600 active:bg-indigo-700 px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
+                Teste grátis
+            </button>
+        </div>
+
+        {/* Botão de Menu Responsivo */}
+        {isSmallScreen && (
+          <div className="md:hidden flex items-center">
+            <button onClick={toggleMenu} className="text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-200">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+              </svg>
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Menu Dropdown em telas pequenas */}
+      {isOpen && isSmallScreen && (
+        <div className="md:hidden w-full bg-dark border-t border-gray-400">
+          <div className="px-4 py-4 pt-2 pb-3 flex flex-col items-center space-y-4 w-full">
+            <a href="#home" className="block text-gray-600 hover:text-blue-500">
+              Home
+            </a>
+            <a href="#services" className="block text-gray-600 hover:text-blue-500">
+              Serviços
+            </a>
+            <a href="#about" className="block text-gray-600 hover:text-blue-500">
+              Sobre
+            </a>
+            <a href="#contact" className="block text-gray-600 hover:text-blue-500">
+              Contato
+            </a>
+          </div>
+          <div className="px-4 py-3">
+            <button className="w-full bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
+              Teste grátis
+            </button>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;
