@@ -3,18 +3,9 @@ import { User } from "@/interfaces/UserCredentials"
 
 const API = process.env.NEXT_PUBLIC_API_HOMOLOG_USER;
 
-interface LoginResponse {
-    token: string;
-    user: {
-      id: string;
-      name: string;
-      email: string;
-    };
-  }
-
-export const Login = async (credentials: User): Promise<AxiosResponse<LoginResponse>> => {
+export const Login = async (credentials: User): Promise<AxiosResponse<any>> => {
     try {
-      const response: AxiosResponse<LoginResponse> = await axios.post(`${API}/auth/login`, credentials, {
+      const response: AxiosResponse<any> = await axios.post(`${API}/auth/login`, credentials, {
         headers: {
           'Content-Type': 'application/json',
         },
