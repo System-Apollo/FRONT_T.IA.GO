@@ -15,7 +15,7 @@ export default function FirstSection() {
                     }
                 });
             },
-            { threshold: 0.8 }
+            { threshold: 0.2 }
         );
 
         if (sectionRef.current) {

@@ -1,4 +1,29 @@
-export default function FirstSection () {
+import { useEffect, useState, useRef } from 'react';
+
+export default function FirstSection() {
+    const [isVisible, setIsVisible] = useState(false);
+    const sectionRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    setIsVisible(entry.isIntersecting); 
+                });
+            },
+            { threshold: 0.4 }
+        );
+
+        if (sectionRef.current) {
+            observer.observe(sectionRef.current);
+        }
+
+        return () => {
+            if (sectionRef.current) {
+                observer.unobserve(sectionRef.current);
+            }
+        };
+    }, []);
 
     const features = [
         {
@@ -52,9 +77,12 @@ export default function FirstSection () {
     ]
 
     return (
-        <section className="py-14">
+        <section ref={sectionRef} className="py-14">
             <div className="max-w-screen-xl mx-auto px-4 text-center text-gray-600 md:px-8">
-                <div className="max-w-2xl mx-auto">
+                <div className={`max-w-2xl mx-auto transform transition-all duration-700 ease-in-out ${
+                        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                    }`}
+                >
                     <h3 className="text-gray-800 text-3xl font-semibold sm:text-4xl">
                         Nossas soluções
                     </h3>
@@ -64,24 +92,25 @@ export default function FirstSection () {
                 </div>
                 <div className="mt-12">
                     <ul className="grid gap-y-8 gap-x-12 sm:grid-cols-2 lg:grid-cols-3">
-                        {
-                            features.map((item, idx) => (
-                                <li key={idx} className="space-y-3 border rounded-xl bg-slate-50 p-8">
-                                    <div className="w-12 h-12 mx-auto bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center">
-                                        {item.icon}
-                                    </div>
-                                    <h4 className="text-lg text-gray-800 font-semibold">
-                                        {item.title}
-                                    </h4>
-                                    <p>
-                                        {item.desc}
-                                    </p>
-                                </li>
-                            ))
-                        }
+                        {features.map((item, idx) => (
+                            <li
+                                key={idx}
+                                className={`space-y-3 border rounded-xl bg-slate-50 p-8 transform transition-all duration-700 ease-in-out ${
+                                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+                                }`}
+                            >
+                                <div className="w-12 h-12 mx-auto bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center">
+                                    {item.icon}
+                                </div>
+                                <h4 className="text-lg text-gray-800 font-semibold">
+                                    {item.title}
+                                </h4>
+                                <p>{item.desc}</p>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </div>
         </section>
-    )
+    );
 }
