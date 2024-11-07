@@ -61,8 +61,8 @@ export default function FirstSection() {
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
             }`}
         >
-            <div className="max-w-screen-xl mx-auto md:px-8">
-                <div className="items-center gap-x-12 sm:px-4 md:px-0 lg:flex">
+            <div className="max-w-screen-xl md:w-screen mx-auto md:px-8">
+                <div className="items-center flex flex-col md:flex-row justify-around gap-x-12 sm:px-4 md:px-0 lg:flex">
                     <div className="flex-1 sm:hidden lg:block">
                         <img src="/tiagochat.svg" className="md:max-w-lg sm:rounded-lg" alt="" />
                     </div>
