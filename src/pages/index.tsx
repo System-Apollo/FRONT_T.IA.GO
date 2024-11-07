@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google';
 import Initial from './initial'
 import Sobre from './sobre';
 import Solucoes from './solucoes';
+import Suporte from './suporte';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -11,6 +12,7 @@ export default function Home() {
       <Initial/>
       <Sobre/>
       <Solucoes/>
+      <Suporte/>
     </main>
   );
 }
