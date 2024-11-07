@@ -3,6 +3,7 @@ import Initial from './initial'
 import Sobre from './sobre';
 import Solucoes from './solucoes';
 import Suporte from './suporte';
+import Footer from './footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -13,6 +14,7 @@ export default function Home() {
       <Sobre/>
       <Solucoes/>
       <Suporte/>
+      <Footer/>
     </main>
   );
 }
