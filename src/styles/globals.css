@@ -52,6 +52,10 @@ body {
   color: linear-gradient(45deg, #020204, #070632);
 }
 
+.bg-dark {
+  background: #0D0C20;
+}
+
 .text-gradient {
   background: var(--fontColor);
   -webkit-background-clip: text;
