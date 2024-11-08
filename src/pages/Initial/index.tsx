@@ -1,4 +1,4 @@
-import Navbar from "@/compotents/Navbar";
+import Navbar from "@/pages/initial/Navbar";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
