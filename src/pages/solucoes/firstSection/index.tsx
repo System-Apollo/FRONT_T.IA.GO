@@ -5,6 +5,7 @@ export default function FirstSection() {
     const sectionRef = useRef(null);
 
     useEffect(() => {
+        const currentSectionRef = sectionRef.current;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -14,13 +15,13 @@ export default function FirstSection() {
             { threshold: 0.4 }
         );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+        if (currentSectionRef) {
+            observer.observe(currentSectionRef);
         }
 
         return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
+            if (currentSectionRef) {
+                observer.unobserve(currentSectionRef);
             }
         };
     }, []);
@@ -77,7 +78,7 @@ export default function FirstSection() {
     ]
 
     return (
-        <section ref={sectionRef} className="py-14">
+        <section id='solucoes' ref={sectionRef} className="py-14">
             <div className="max-w-screen-xl mx-auto px-4 text-center text-gray-600 md:px-8">
                 <div className={`max-w-2xl mx-auto transform transition-all duration-700 ease-in-out ${
                         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'

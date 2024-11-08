@@ -5,6 +5,7 @@ export default function Planos() {
     const sectionRef = useRef(null);
 
     useEffect(() => {
+        const currentSectionRef = sectionRef.current;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -14,13 +15,13 @@ export default function Planos() {
             { threshold: 0.2 }
         );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+        if (currentSectionRef) {
+            observer.observe(currentSectionRef);
         }
 
         return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
+            if (currentSectionRef) {
+                observer.unobserve(currentSectionRef);
             }
         };
     }, []);
@@ -71,7 +72,7 @@ export default function Planos() {
     ];
 
     return (
-        <section ref={sectionRef} className="py-14 bg-gradient w-full">
+        <section id='planos' ref={sectionRef} className="py-14 bg-gradient w-full">
             <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
                 <div className={`relative max-w-xl mx-auto sm:text-center transform transition-all duration-700 ease-in-out ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
