@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
 const Navbar: React.FC = () => {
@@ -21,11 +22,11 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-none fixed w-full z-10">
+    <nav className="bg-none w-full z-10">
       <div className="container mx-auto px-4 sm:px-6 md:px-8 py-4 flex justify-between items-center h-16">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <img src="/mfdigitallaw.svg" alt="Logo" className="h-8 w-8" />
+          <Image src="/mfdigitallaw.svg" alt="Logo" width={160} height={50} />
         </div>
 
         {/* Navegação em telas grandes com espaçamento adicional */}
