@@ -59,7 +59,7 @@ export default function Suporte() {
     ];
 
     return (
-        <main className="py-14 w-full">
+        <main id='suporte' className="py-14 w-full">
             <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
                 <div className="max-w-xl space-y-3">
                     <h3 className="text-gradient font-semibold">Suporte</h3>

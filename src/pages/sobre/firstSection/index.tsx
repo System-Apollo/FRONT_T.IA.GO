@@ -56,6 +56,7 @@ export default function FirstSection() {
     ]
     return (
         <section
+            id='sobre'
             ref={sectionRef}
             className={`py-14 transform transition-all duration-700 ease-in-out ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'

@@ -71,7 +71,7 @@ export default function Planos() {
     ];
 
     return (
-        <section ref={sectionRef} className="py-14 bg-gradient w-full">
+        <section id='planos' ref={sectionRef} className="py-14 bg-gradient w-full">
             <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
                 <div className={`relative max-w-xl mx-auto sm:text-center transform transition-all duration-700 ease-in-out ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
