@@ -1,6 +1,6 @@
 import Navbar from "@/pages/initial/Navbar";
 import { ChevronDown } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Initial() {
     const [isVisible, setIsVisible] = useState(false);
