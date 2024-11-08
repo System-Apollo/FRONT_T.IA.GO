@@ -34,14 +34,14 @@ const Navbar: React.FC = () => {
           <a href="#home" className="text-gray-300 hover:text-blue-500 px-4">
             Home
           </a>
-          <a href="#services" className="text-gray-300 hover:text-blue-500 px-4">
-            Serviços
-          </a>
-          <a href="#about" className="text-gray-300 hover:text-blue-500 px-4">
+          <a href="#sobre" className="text-gray-300 hover:text-blue-500 px-4">
             Sobre
           </a>
-          <a href="#contact" className="text-gray-300 hover:text-blue-500 px-4">
-            Contato
+          <a href="#planos" className="text-gray-300 hover:text-blue-500 px-4">
+            Nossos planos
+          </a>
+          <a href="#suporte" className="text-gray-300 hover:text-blue-500 px-4">
+            Suporte
           </a>
         </div>
 
@@ -71,14 +71,14 @@ const Navbar: React.FC = () => {
             <a href="#home" className="block text-gray-600 hover:text-blue-500">
               Home
             </a>
-            <a href="#services" className="block text-gray-600 hover:text-blue-500">
-              Serviços
-            </a>
-            <a href="#about" className="block text-gray-600 hover:text-blue-500">
+            <a href="#sobre" className="block text-gray-600 hover:text-blue-500">
               Sobre
             </a>
-            <a href="#contact" className="block text-gray-600 hover:text-blue-500">
-              Contato
+            <a href="#planos" className="block text-gray-600 hover:text-blue-500">
+              Nossos planos
+            </a>
+            <a href="#suporte" className="block text-gray-600 hover:text-blue-500">
+              Suporte
             </a>
           </div>
           <div className="px-4 py-3">
