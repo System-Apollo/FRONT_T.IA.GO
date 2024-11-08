@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Navegação em telas grandes com espaçamento adicional */}
-        <div className="hidden md:flex space-x-8 lg:space-x-16">
+        <div className="hidden md:flex space-x-4 lg:space-x-4">
           <a href="#home" className="text-gray-300 hover:text-blue-500 px-4">
             Home
           </a>
