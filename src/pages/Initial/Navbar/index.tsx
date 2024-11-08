@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
 const Navbar: React.FC = () => {
@@ -50,9 +51,11 @@ const Navbar: React.FC = () => {
 
         {/* Botão em telas grandes */}
         <div className="hidden md:flex ml-4">
+          <Link href="/registro">
             <button className="bg-blue-500 text-white bg-blue-700 duration-150 hover:bg-blue-600 active:bg-indigo-700 px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
                 Teste grátis
             </button>
+          </Link>
         </div>
 
         {/* Botão de Menu Responsivo */}
