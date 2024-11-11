@@ -4,6 +4,7 @@ import logoTIAGO from "../../../public/logoTIAGO.svg"
 import Link from "next/link";
 import { useState } from "react";
 import { LoginApi } from "@/utils/PostLogin";
+import { useRouter } from "next/router";
 
 
 export default function Login() {
@@ -11,6 +12,8 @@ export default function Login() {
         email: "",
         password: "",
     });
+
+    const router = useRouter();
 
     const handleChange = (e: any) => {
         const { name, value } = e.target;
@@ -28,6 +31,9 @@ export default function Login() {
                 password: formData.password,
             });
             alert(response.data.message);
+            console.log(response.data);
+            localStorage.setItem("token", response.data.tokens.access_token);
+            router.push("./tiago");
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
             alert("Falha no registro. Tente novamente.");
