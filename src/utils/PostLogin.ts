@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from "axios"
 import { User } from "@/interfaces/UserCredentials"
 
-const API = process.env.NEXT_PUBLIC_API_HOMOLOG_USER;
+const API = process.env.NEXT_PUBLIC_API_HOMOLOG;
 
-export const Login = async (credentials: User): Promise<AxiosResponse<any>> => {
+export const LoginApi = async (credentials: User): Promise<AxiosResponse<any>> => {
     try {
       const response: AxiosResponse<any> = await axios.post(`${API}/auth/login`, credentials, {
         headers: {
@@ -18,7 +18,7 @@ export const Login = async (credentials: User): Promise<AxiosResponse<any>> => {
   };
   
   const api = {
-    Login,
+    LoginApi,
   };
   
   export default api;
