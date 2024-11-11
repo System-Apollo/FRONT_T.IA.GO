@@ -106,32 +106,36 @@ export default function Planos() {
                                     R$ {item.price} <span className="text-xl text-gray-600 font-normal">/mês</span>
                                 </div>
                                 <p className="text-gray-400">{item.desc}</p>
-                                <button className="px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-gray-800 bg-indigo-100 hover:text-gray-600 active:bg-indigo-700">
-                                    Começar
-                                </button>
                             </div>
-                            <ul className="p-8 space-y-3">
-                                <li className="pb-2 text-indigo-100 font-medium">
-                                    <p>Acompanha</p>
-                                </li>
-                                {item.features.map((featureItem, idx) => (
-                                    <li key={idx} className="flex items-center text-gray-400 gap-5">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-5 w-5 text-green-500"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                clipRule="evenodd"
-                                            ></path>
-                                        </svg>
-                                        {featureItem}
+                            <div className='flex flex-col justify-between h-full pb-6 items-center'>
+                                <ul className="p-8 space-y-3 w-full">
+                                    <li className="pb-2 text-indigo-100 font-medium">
+                                        <p>Acompanha</p>
                                     </li>
-                                ))}
-                            </ul>
+                                    {item.features.map((featureItem, idx) => (
+                                        <li key={idx} className="flex items-center text-gray-400 gap-5">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-5 w-5 text-green-500"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clipRule="evenodd"
+                                                ></path>
+                                            </svg>
+                                            {featureItem}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <div className='w-full px-7'>
+                                    <button className="px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-gray-800 bg-indigo-100 hover:text-gray-600 active:bg-indigo-700">
+                                        Começar
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>

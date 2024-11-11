@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { LoginApi } from "@/utils/PostLogin";
 import { useRouter } from "next/router";
+import { ArrowLeft } from "lucide-react";
 
 
 export default function Login() {
@@ -43,9 +44,11 @@ export default function Login() {
     return (
         <main className="w-full flex">
             <div className="relative flex-1 hidden items-center justify-center h-screen bg-gradient lg:flex">
-                <div>
-
-                    {/* <p>Voltar</p> */}
+                <div className="absolute top-6 left-6 flex flex-row gap-2 items-center">
+                    <ArrowLeft />
+                    <Link href="/">
+                        <button>Voltar</button>
+                    </Link>
                 </div>
                 <div className="relative z-10 w-full max-w-md">
                     <Image src={logoMF} width={250} height={250} alt="logo" />
