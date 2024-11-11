@@ -3,6 +3,9 @@ import dynamic from "next/dynamic";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import api from "../../utils/PostResponseApi";
 import LogoTIAGO from "../../../public/logoTIAGO.svg";
+import { ArrowLeft, UserRound } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 // Registrar componentes do Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -98,12 +101,26 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-4 bg-gray-100 min-h-screen">
-      <header className="flex items-center gap-2">
+    <div className="flex flex-col items-center p-4 bg-gradientlight min-h-screen">
+      <header className="flex items-center flex-row justify-between w-full gap-2 p-3 text-gray-950">
+        <div className="flex flex-row gap-2 items-center">
+            <ArrowLeft />
+            <Link href="/">
+                <button>Voltar</button>
+            </Link>
+        </div>
+        <Image src={'/mfname.svg'} width={120} height={90} alt="MF name" />
+        <div className="bg-gray-300 p-1 rounded-lg">
+          <UserRound />
+        </div>
+      </header>
+
+      <div className="flex flex-row items-center justify-between">
         <img src={LogoTIAGO} height={150} width={150} alt="logo" className="h-10" />
         <h1 className="text-xl font-semibold">TIAGO</h1>
         <p className="text-green-500">{status}</p>
-      </header>
+
+      </div>
 
       <div ref={conversaRef} className="w-full max-w-md mt-4 p-4 bg-white shadow-lg rounded-lg overflow-y-auto h-96">
         {conversas.map((conversa, index) => (
