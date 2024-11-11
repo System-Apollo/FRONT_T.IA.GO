@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { User } from "@/interfaces/UserCredentials";
 
-const API = process.env.NEXT_PUBLIC_API_HOMOLOG_USER;
+const API = process.env.NEXT_PUBLIC_API_HOMOLOG;
 
 export const registerUser = async (userData: User): Promise<AxiosResponse<any>> => {
   try {
