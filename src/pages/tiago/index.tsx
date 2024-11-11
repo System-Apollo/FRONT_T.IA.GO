@@ -1,6 +1,14 @@
 import { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import api from "../../utils/PostResponseApi";
 import LogoTIAGO from "../../../public/logoTIAGO.svg";
+
+// Registrar componentes do Chart.js
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+// Carregar o gráfico de forma dinâmica para desativar o SSR
+const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar), { ssr: false });
 
 interface Conversa {
   pergunta: string;
@@ -12,7 +20,7 @@ const App: React.FC = () => {
   const [conversas, setConversas] = useState<Conversa[]>([]);
   const [digitando, setDigitando] = useState<boolean>(false);
   const [status, setStatus] = useState<string>("online");
-  const [dadosGrafico, setDadosGrafico] = useState<any>({});
+  const [dadosGrafico, setDadosGrafico] = useState<any>(null);
   const [mostrarGrafico, setMostrarGrafico] = useState<boolean>(false);
 
   const conversaRef = useRef<HTMLDivElement | null>(null);
@@ -58,12 +66,35 @@ const App: React.FC = () => {
 
       if (response.data.grafico) {
         setDadosGrafico(response.data.grafico);
+        console.log(response.data);
         setMostrarGrafico(true);
       }
       setPergunta("");
     } catch (error) {
       console.error("Erro ao enviar pergunta:", error);
     }
+  };
+
+  // Dados do gráfico configurados com base nos dados recebidos
+  const data = {
+    labels: ["Ativos", "Arquivados"],
+    datasets: [
+      {
+        label: "Status dos Processos",
+        data: dadosGrafico ? [dadosGrafico.ativos, dadosGrafico.arquivados] : [0, 0],
+        backgroundColor: ["#4CAF50", "#F44336"],
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
   };
 
   return (
@@ -98,11 +129,11 @@ const App: React.FC = () => {
         </button>
       </div>
 
-      {/* {mostrarGrafico && (
-        <div className="mt-6 w-full max-w-lg">
-          <Bar data={dadosGrafico} options={{ responsive: true, maintainAspectRatio: false }} />
+      {mostrarGrafico && (
+        <div className="mt-6 w-full max-w-lg h-64">
+          <Bar data={data} options={options} />
         </div>
-      )} */}
+      )}
     </div>
   );
 };
