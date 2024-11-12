@@ -49,6 +49,10 @@ body {
   background: var(--background-solid);
 }
 
+.bg-blue {
+  background: #cbd4ff;
+}
+
 .bg-gradient {
   background: var(--background-gradient);
 }
