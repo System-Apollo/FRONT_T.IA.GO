@@ -116,28 +116,49 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradientlight">
-    <header className="flex fixed items-center flex-row justify-between w-full gap-2 px-3 text-zinc-900">
-      <div className="flex flex-row gap-2 items-center">
-        <ArrowLeft />
-        <Link href="/">
-          <button>Voltar</button>
-        </Link>
-      </div>
-      <Image src={'/mfname.svg'} width={120} height={90} alt="MF name" />
-      <div className="bg-gray-300 p-1 rounded-lg">
-        <UserRound />
-      </div>
-    </header>
-  
-    {/* Div que ocupa o resto da tela */}
-    <div className="flex flex-col w-full max-w-1/2 items-center flex-grow">
-      {mostrarSaudacao ? (
-        <div className="flex flex-col items-center w-full mb-4">
-          <h2 className="text-3xl md:text-4xl font-semibold text-blue-800">Olá, {nomeUsuario}</h2>
-          <h2 className="text-3xl md:text-4xl text-center font-semibold text-zinc-800">Como posso te ajudar hoje?</h2>
+   <div className="flex flex-col min-h-screen bg-blue">
+  {/* Tela de saudação ocupando toda a área sem scroll */}
+  {mostrarSaudacao ? (
+    <div className="fixed inset-0 flex flex-col items-center justify-center overflow-hidden">
+      {/* Header fixo no topo da tela */}
+      <header className="flex items-center w-full bg-blue fixed top-0 z-10 justify-between gap-2 p-3 text-zinc-900">
+        <div className="flex flex-row gap-2 items-center">
+          <ArrowLeft />
+          <Link href="/">
+            <button>Voltar</button>
+          </Link>
         </div>
-      ) : (
+        <Image src={'/mfname.svg'} width={120} height={90} alt="MF name" />
+        <div className="bg-gray-300 p-1 rounded-lg">
+          <UserRound />
+        </div>
+      </header>
+
+      {/* Conteúdo de saudação centralizado */}
+      <div className="flex flex-col items-center mt-16"> {/* mt-16 para espaço abaixo do header */}
+        <h2 className="text-3xl md:text-4xl font-semibold text-blue-800">Olá, {nomeUsuario}</h2>
+        <h2 className="text-3xl md:text-4xl text-center font-semibold text-zinc-800">Como posso te ajudar hoje?</h2>
+      </div>
+    </div>
+  ) : (
+    <>
+      {/* Header fixo no topo na tela principal */}
+      <header className="flex items-center flex-row justify-between w-full gap-2 p-3 text-zinc-900 fixed top-0 z-10 bg-blue">
+        <div className="flex flex-row gap-2 items-center">
+          <ArrowLeft />
+          <Link href="/">
+            <button>Voltar</button>
+          </Link>
+        </div>
+        <Image src={'/mfname.svg'} width={120} height={90} alt="MF name" />
+        <div className="bg-gray-300 p-1 rounded-lg">
+          <UserRound />
+        </div>
+      </header>
+
+      {/* Conteúdo principal abaixo do header fixo */}
+      <div className="flex flex-col w-full max-w-1/2 items-center flex-grow pt-16 overflow-auto mb-20">
+        {/* pt-16 para compensar a altura do header e mb-20 para o espaço do input fixo */}
         <div className="flex flex-col w-full mt-4 max-w-3xl items-center h-full">
           <div ref={conversaRef} className="w-full p-4 bg-transparent rounded-b-lg overflow-y-auto h-full">
             {conversas.map((conversa, index) => (
@@ -149,7 +170,7 @@ const App: React.FC = () => {
                 </div>
                 
                 <div className="flex flex-col justify-start mt-2 gap-2">
-                  <div className="flex items-center flex-row justify-start gap-3">
+                  <div className="flex items-start flex-row justify-start gap-3">
                     <Image src={'/tiagoprofileblue.svg'} width={40} height={40} className="rounded-full border border-gray-700" alt="MF name" />
                     <p className="text-zinc-600 py-2 rounded-lg text-left">
                       {conversa.resposta}
@@ -160,26 +181,26 @@ const App: React.FC = () => {
             ))}
           </div>
         </div>
-      )}
-    </div>
-  
-    {/* Input fixo no rodapé */}
-    <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 p-4 flex gap-2">
-      <input
-        name="pergunta"
-        type="text"
-        value={pergunta}
-        onChange={(e) => setPergunta(e.target.value)}
-        onKeyPress={(e) => e.key === "Enter" && handlePergunta()}
-        placeholder="Faça uma pergunta"
-        className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none"
-      />
-      <button onClick={handlePergunta} className="bg-blue-900 text-white p-2 rounded-lg">
-        Enviar
-      </button>
-    </div>
+      </div>
+    </>
+  )}
+
+  {/* Input fixo no rodapé, sempre visível */}
+  <div className="fixed bottom-0 bg-blue left-1/2 transform -translate-x-1/2 w-1/2 p-4 flex gap-2">
+    <input
+      name="pergunta"
+      type="text"
+      value={pergunta}
+      onChange={(e) => setPergunta(e.target.value)}
+      onKeyPress={(e) => e.key === "Enter" && handlePergunta()}
+      placeholder="Faça uma pergunta"
+      className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none"
+    />
+    <button onClick={handlePergunta} className="bg-blue-900 text-white p-2 rounded-lg">
+      Enviar
+    </button>
   </div>
-  
+</div>
 
   );
 };
