@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 
 export default function Planos() {
@@ -39,6 +40,7 @@ export default function Planos() {
                 "Limitado a 20 processos",
                 "Ilimitado por 7 dias",
             ],
+            isButton: true,
         },
         {
             name: "Plano Assistente",
@@ -53,6 +55,7 @@ export default function Planos() {
                 "Até 200 perguntas (tokens)",
                 "Suporte pelo Whatsapp",
             ],
+            isButton: true,
         },
         {
             name: "Plano Analista",
@@ -68,6 +71,7 @@ export default function Planos() {
                 "Suporte pelo Whatsapp",
                 "Acesso via Telegram",
             ],
+            isButton: false,
         },
     ];
 
@@ -131,9 +135,17 @@ export default function Planos() {
                                     ))}
                                 </ul>
                                 <div className='w-full px-7'>
-                                    <button className="px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-gray-800 bg-indigo-100 hover:text-gray-600 active:bg-indigo-700">
-                                        Começar
-                                    </button>
+                                    {item.isButton ? (
+                                        <Link href={'/registro'}>
+                                            <button className="px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-gray-800 bg-indigo-100 hover:text-gray-600 active:bg-indigo-700">
+                                                Começar
+                                            </button>
+                                        </Link>
+                                    ) : (
+                                        <button className="bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50 w-full" disabled>
+                                            Disponível em breve
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>
