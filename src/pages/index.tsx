@@ -1,5 +1,5 @@
 import { Inter } from 'next/font/google';
-import Initial from './Initial';
+import Initial from './initial';
 import Sobre from './sobre';
 import Solucoes from './solucoes';
 import Suporte from './suporte';
