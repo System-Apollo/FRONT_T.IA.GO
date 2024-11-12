@@ -64,7 +64,8 @@ const App: React.FC = () => {
       localStorage.setItem("conversas", JSON.stringify(conversas));
     }
   }, [conversas]);
-// Efeito de digitação para a saudação ("Olá, Fulana")
+
+// Efeito de digitação
 useEffect(() => {
   let index = 0;
   const interval = setInterval(() => {
@@ -85,7 +86,7 @@ useEffect(() => {
     if (index > mensagem.length) {
       clearInterval(interval);
     }
-  }, 100);
+  }, 50);
   return () => clearInterval(interval);
 }, [mensagem]);
 
