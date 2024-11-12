@@ -25,7 +25,7 @@ const App: React.FC = () => {
   const [status, setStatus] = useState<string>("online");
   const [dadosGrafico, setDadosGrafico] = useState<any>(null);
   const [mostrarGrafico, setMostrarGrafico] = useState<boolean>(false);
-  const [mostrarSaudacao, setMostrarSausacao] = useState<boolean>(true);
+  const [mostrarSaudacao, setMostrarSaudacao] = useState<boolean>(true);
   const [nomeUsuario, setNomeUsuario] = useState<string>("");
 
   const conversaRef = useRef<HTMLDivElement | null>(null);
@@ -62,7 +62,7 @@ const App: React.FC = () => {
   const handlePergunta = async () => {
     setDigitando(true);
     setStatus("digitando...");
-    setMostrarSausacao(false);
+    setMostrarSaudacao(false);
 
     const newConversa = { pergunta, resposta: "" };
     setConversas((prev) => [...prev, newConversa]);
@@ -157,10 +157,9 @@ const App: React.FC = () => {
       </header>
 
       {/* Conteúdo principal abaixo do header fixo */}
-      <div className="flex flex-col w-full max-w-1/2 items-center flex-grow pt-16 overflow-auto mb-20">
+      <div className="flex flex-col w-full max-w-1/2 items-center flex-grow pt-16 overflow-auto">
         {/* pt-16 para compensar a altura do header e mb-20 para o espaço do input fixo */}
-        <div className="flex flex-col w-full mt-4 max-w-3xl items-center h-full">
-          <div ref={conversaRef} className="w-full p-4 bg-transparent rounded-b-lg overflow-y-auto h-full">
+          <div ref={conversaRef} className="w-full p-4 max-w-3xl bg-transparent rounded-b-lg overflow-y-auto max-h-1/2">
             {conversas.map((conversa, index) => (
               <div key={index} className="mb-4">
                 <div className="flex justify-end">
@@ -179,14 +178,13 @@ const App: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
         </div>
       </div>
     </>
   )}
 
   {/* Input fixo no rodapé, sempre visível */}
-  <div className="fixed bottom-0 bg-blue left-1/2 transform -translate-x-1/2 w-1/2 p-4 flex gap-2">
+  <div className="fixed bottom-0 bg-blue left-1/2 transform -translate-x-1/2 md:w-1/2 w-full p-4 flex gap-2">
     <input
       name="pergunta"
       type="text"
