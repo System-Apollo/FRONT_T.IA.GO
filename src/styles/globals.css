@@ -7,7 +7,7 @@
 :root {
   --background-solid: #f6f6f6;
   --background-gradient: linear-gradient(45deg, #020204, #070632);
-  --background-gradientlight: linear-gradient(45deg, #B2C0FF, #f6f6f6);
+  --background-gradientlight: linear-gradient(45deg, #cbd4ff, #f6f6f6);
   --foreground: #171717;
 }
 
