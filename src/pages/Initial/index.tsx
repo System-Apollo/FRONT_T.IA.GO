@@ -10,6 +10,21 @@ export default function Initial() {
         setIsVisible(true);
     }, []);
 
+    const [textoMensagem, setTextoMensagem] = useState<string>("");
+    const mensagem = "Inteligência Artificial Generativa";
+
+    useEffect(() => {
+        let index = 0;
+        const interval = setInterval(() => {
+          setTextoMensagem(mensagem.slice(0, index));
+          index++;
+          if (index > mensagem.length) {
+            clearInterval(interval);
+          }
+        }, 40);
+        return () => clearInterval(interval);
+      }, [mensagem]);
+
     return (
         <>
             <div className="relative w-full bg-gradient overflow-hidden">
@@ -36,11 +51,11 @@ export default function Initial() {
                                 isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                             }`}
                         >
-                            <h1 className="text-sm text-gradient font-bold text-xl">T.IA.GO</h1>
+                            <h1 className="text-sm text-gradient font-bold text-xl">TIAGO</h1>
                             <h2 className="text-4xl text-indigo-50 font-medium md:text-5xl">
                                 Seu assistente inteligente para potenciar suas análises
                             </h2>
-                            <p className="text-gradient">Inteligência Artificial Generativa</p>
+                            <p className="text-gradient md:text-2xl text-xl">{textoMensagem}</p>
                             <div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
                                 <Link href="/registro">
                                     <button className="block py-2 px-4 text-center text-white font-medium bg-blue-700 duration-150 hover:bg-blue-600 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none">
