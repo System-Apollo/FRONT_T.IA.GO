@@ -52,6 +52,9 @@ body {
 .bg-blue {
   background: #cbd4ff;
 }
+.bg-chat {
+  background: #ecefff;
+}
 
 .bg-gradient {
   background: var(--background-gradient);
