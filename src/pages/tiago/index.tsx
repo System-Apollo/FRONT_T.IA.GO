@@ -159,7 +159,7 @@ const App: React.FC = () => {
       {/* Conteúdo principal abaixo do header fixo */}
       <div className="flex flex-col w-full max-w-1/2 items-center flex-grow pt-16 overflow-auto">
         {/* pt-16 para compensar a altura do header e mb-20 para o espaço do input fixo */}
-          <div ref={conversaRef} className="w-full p-4 max-w-3xl bg-transparent rounded-b-lg overflow-y-auto max-h-1/2">
+          <div ref={conversaRef} className="w-full p-4 max-w-3xl bg-transparent rounded-b-lg overflow-y-auto mb-12">
             {conversas.map((conversa, index) => (
               <div key={index} className="mb-4">
                 <div className="flex justify-end">
