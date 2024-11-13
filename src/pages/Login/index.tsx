@@ -34,6 +34,7 @@ export default function Login() {
             alert(response.data.message);
             console.log(response.data);
             localStorage.setItem("token", response.data.tokens.access_token);
+            localStorage.setItem("username", response.data.username);
             router.push("./tiago");
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
