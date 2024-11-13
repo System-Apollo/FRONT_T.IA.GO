@@ -6,11 +6,11 @@ import { ArrowLeft, UserRound } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-// Registrar componentes do Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 // Carregar o gráfico de forma dinâmica para desativar o SSR
 const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar), { ssr: false });
+
 
 interface Conversa {
   pergunta: string;
@@ -26,6 +26,7 @@ const App: React.FC = () => {
   const [mostrarGrafico, setMostrarGrafico] = useState<boolean>(false);
   const [mostrarSaudacao, setMostrarSaudacao] = useState<boolean>(true);
   const [nomeUsuario, setNomeUsuario] = useState<string>("");
+  const [tipoGrafico, setTipoGrafico] = useState<string>("");
 
   // Estados para controlar o efeito de digitação
   const [textoSaudacao, setTextoSaudacao] = useState<string>("");
@@ -113,9 +114,14 @@ useEffect(() => {
       ]);
 
       if (response.data.grafico) {
-        setDadosGrafico(response.data.grafico);
-        console.log(response.data);
-        setMostrarGrafico(true);
+        const { dados, tipo } = configureGraficoData(response.data.grafico);
+        if (dados) {
+          setDadosGrafico(dados);
+          setTipoGrafico(tipo);
+          setMostrarGrafico(true);
+        } else {
+          setMostrarGrafico(false);
+        }
       }
       setPergunta("");
     } catch (error) {
@@ -463,6 +469,11 @@ useEffect(() => {
       Enviar
     </button>
   </div>
+  {mostrarGrafico && dadosGrafico && dadosGrafico.labels && (
+        <div className="mt-6 w-full max-w-lg h-64">
+          <Bar data={dadosGrafico} options={options} />
+        </div>
+      )}
 </div>
 
   );
