@@ -48,12 +48,12 @@ export default function SecondSection() {
             
             <div className="max-w-xl mx-auto text-center relative z-10">
                 <div className="py-4">
-                    <h3 className={`text-3xl text-indigo-50 font-semibold md:text-4xl transform transition-all duration-700 ease-in-out ${
+                    <h3 className={`text-3xl text-white font-semibold md:text-4xl transform transition-all duration-700 ease-in-out ${
                         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                     }`}>
                         Jurídico orientado a objetos
                     </h3>
-                    <p className={`text-indigo-50 leading-relaxed mt-3 transform transition-all duration-700 ease-in-out ${
+                    <p className={`text-white leading-relaxed mt-3 transform transition-all duration-700 ease-in-out ${
                         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                     }`}>
                         Com nossa inteligência artificial generativa, você tem acesso às análises, reports e acompanhamentos dos seus processos, dando assertividade e agilidade para as tomadas de decisões.
