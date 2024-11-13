@@ -42,8 +42,9 @@ html {
 
 body {
   color: var(--foreground);
-  font-family: 'Inter';
+  font-family: 'Work Sans', 'Inter', sans-serif;
 }
+
 
 .bg-solid {
   background: var(--background-solid);
