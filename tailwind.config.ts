@@ -8,8 +8,8 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-        sans: ['Inter'],
-      },
+      sans: ['"Work Sans"', 'Inter', 'sans-serif'],
+    },
     extend: {
       colors: {
         background: "var(--background)",
@@ -19,4 +19,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;
