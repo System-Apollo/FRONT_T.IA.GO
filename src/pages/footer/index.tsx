@@ -13,22 +13,22 @@ export default function Footer() {
             </div>
             <div className="mt-8 py-6 border-t border-slate-700 items-center justify-between sm:flex">
                 <div className="mt-4 sm:mt-0 text-indigo-100">
-                    &copy; 2022 Float UI All rights reserved.
+                    &copy; 2022 MF Digital Law. Todos os direitos reservados.
                 </div>
                 <div className="mt-6 sm:mt-0">
                     <ul className="flex items-center space-x-4">
                         <li className="w-10 h-10  flex items-center justify-center">
-                            <a href="https://instagram.com">
+                            <a href="https://www.instagram.com/mfdigitallaw/">
                                 <FaInstagram className="text-indigo-100 w-6 h-6" />
                             </a>
                         </li>
                         <li className="w-10 h-10  flex items-center justify-center">
-                            <a href="https://linkedin.com">
+                            <a href="https://www.linkedin.com/company/mf-digital-law/mycompany/">
                                 <FaLinkedin className="text-indigo-100 w-6 h-6" />
                             </a>
                         </li>
                         <li className="w-10 h-10  flex items-center justify-center">
-                            <a href="mailto:your-email@example.com">
+                            <a href="mailto:comercialadv@meirelesefreitas.com.br">
                                 <FaEnvelope className="text-indigo-100 w-6 h-6" />
                             </a>
                         </li>
