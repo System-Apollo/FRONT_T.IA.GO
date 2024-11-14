@@ -4,8 +4,10 @@ import { useState } from "react";
 import { registerUser } from './../../utils/PostReigisterUser';
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import Modal from "@/components/modal";
 
 export default function Registro() {
+    const [showModal, setShowModal] = useState(false);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -35,7 +37,8 @@ export default function Registro() {
                 password: formData.password,
                 cpf_cnpj: formData.cpf_cnpj
             });
-            alert(response.data.message);
+            // alert(response.data.message);
+            setShowModal(true);
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
             alert("Falha no registro. Tente novamente.");
@@ -159,6 +162,13 @@ export default function Registro() {
                     </form>
                 </div>
             </div>
+            <Modal
+                title="Cadastro realizado com sucesso!"
+                text="Seu cadastro foi concluído. Bem-vindo!"
+                buttonText="OK"
+                onClick={() => setShowModal(false)}
+                showCancelButton={false}
+            />
         </main>
     )
 }
