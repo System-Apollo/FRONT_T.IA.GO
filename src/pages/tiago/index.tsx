@@ -11,7 +11,6 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 // Carregar o gráfico de forma dinâmica para desativar o SSR
 const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar), { ssr: false });
 
-
 interface Conversa {
   pergunta: string;
   resposta: string;
@@ -65,30 +64,30 @@ const App: React.FC = () => {
     }
   }, [conversas]);
 
-// Efeito de digitação
-useEffect(() => {
-  let index = 0;
-  const interval = setInterval(() => {
-    setTextoSaudacao(saudacao.slice(0, index));
-    index++;
-    if (index > saudacao.length) {
-      clearInterval(interval);
-    }
-  }, 100);
-  return () => clearInterval(interval);
-}, [saudacao]);
+  // Efeito de digitação
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setTextoSaudacao(saudacao.slice(0, index));
+      index++;
+      if (index > saudacao.length) {
+        clearInterval(interval);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, [saudacao]);
 
-useEffect(() => {
-  let index = 0;
-  const interval = setInterval(() => {
-    setTextoMensagem(mensagem.slice(0, index));
-    index++;
-    if (index > mensagem.length) {
-      clearInterval(interval);
-    }
-  }, 50);
-  return () => clearInterval(interval);
-}, [mensagem]);
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setTextoMensagem(mensagem.slice(0, index));
+      index++;
+      if (index > mensagem.length) {
+        clearInterval(interval);
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  }, [mensagem]);
 
   const handlePergunta = async () => {
     setDigitando(true);
@@ -115,10 +114,14 @@ useEffect(() => {
 
       if (response.data.grafico) {
         const { dados, tipo } = configureGraficoData(response.data.grafico);
-        if (dados) {
-          setDadosGrafico(dados);
-          setTipoGrafico(tipo);
-          setMostrarGrafico(true);
+        if (response.data.grafico) {
+          const { dados, tipo } = configureGraficoData(response.data.grafico);
+          if (dados) {
+            setDadosGrafico(dados); // Apenas defina se dados é válido
+            setTipoGrafico(tipo);
+            setMostrarGrafico(false); // Garante que o gráfico está oculto inicialmente
+            console.log("Dados do gráfico definidos:", dados);
+          }
         } else {
           setMostrarGrafico(false);
         }
@@ -127,6 +130,16 @@ useEffect(() => {
     } catch (error) {
       console.error("Erro ao enviar pergunta:", error);
     }
+  };
+
+  useEffect(() => {
+    if (dadosGrafico) {
+      setMostrarGrafico(false);
+    }
+  }, [dadosGrafico]);
+
+  const toggleMostrarGrafico = () => {
+    setMostrarGrafico((prev) => !prev);
   };
 
   const configureGraficoData = (graficoData: any) => {
@@ -335,18 +348,18 @@ useEffect(() => {
         tipo: "Média de Duração por Estado",
       };
     } else if (graficoData.valor_condenacao_por_comarca) {
-        return{
-          dados: {
-            labels: Object.keys(graficoData.valor_condenacao_por_comarca),
-            datasets: [{
-              label: 'Valor Total de Condenação (R$)',
-              data: Object.values(graficoData.valor_condenacao_por_comarca),
-              backgroundColor: "#FFEB3B",
-            }],
-          },
-          tipo: "Valor Total de Condenação por Comarca",
-        }
-      } else if (graficoData.media_duracao_por_comarca) {
+      return {
+        dados: {
+          labels: Object.keys(graficoData.valor_condenacao_por_comarca),
+          datasets: [{
+            label: 'Valor Total de Condenação (R$)',
+            data: Object.values(graficoData.valor_condenacao_por_comarca),
+            backgroundColor: "#FFEB3B",
+          }],
+        },
+        tipo: "Valor Total de Condenação por Comarca",
+      }
+    } else if (graficoData.media_duracao_por_comarca) {
       return {
         dados: {
           labels: Object.keys(graficoData.media_duracao_por_comarca),
@@ -454,27 +467,40 @@ useEffect(() => {
         </>
       )}
 
-  {/* Input fixo no rodapé, sempre visível */}
-  <div className="fixed bottom-0 bg-blue left-1/2 transform -translate-x-1/2 w-1/2 p-4 flex gap-2">
-    <input
-      name="pergunta"
-      type="text"
-      value={pergunta}
-      onChange={(e) => setPergunta(e.target.value)}
-      onKeyPress={(e) => e.key === "Enter" && handlePergunta()}
-      placeholder="Faça uma pergunta"
-      className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none"
-    />
-    <button onClick={handlePergunta} className="bg-blue-900 text-white p-2 rounded-lg">
-      Enviar
+      {/* Input fixo no rodapé, sempre visível */}
+      <div className="fixed bottom-0 bg-blue left-1/2 transform -translate-x-1/2 w-1/2 p-4 flex gap-2">
+        <input
+          name="pergunta"
+          type="text"
+          value={pergunta}
+          onChange={(e) => setPergunta(e.target.value)}
+          onKeyPress={(e) => e.key === "Enter" && handlePergunta()}
+          placeholder="Faça uma pergunta"
+          className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none"
+        />
+        <button onClick={handlePergunta} className="bg-blue-900 text-white p-2 rounded-lg">
+          Enviar
+        </button>
+      </div>
+
+      {dadosGrafico && (
+  <div className="flex mt-4">
+    <button
+      onClick={toggleMostrarGrafico}
+      className="bg-blue-900 text-white px-4 py-2 rounded-lg"
+    >
+      {mostrarGrafico ? "Ocultar Gráfico" : "Mostrar Gráfico"}
     </button>
   </div>
-  {mostrarGrafico && dadosGrafico && dadosGrafico.labels && (
+)}
+
+      {/* Exibir o gráfico somente se mostrarGrafico for true */}
+      {mostrarGrafico && dadosGrafico && dadosGrafico.labels && (
         <div className="mt-6 w-full max-w-lg h-64">
           <Bar data={dadosGrafico} options={options} />
         </div>
       )}
-</div>
+    </div>
 
   );
 };
