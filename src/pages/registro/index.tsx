@@ -37,6 +37,7 @@ export default function Registro() {
                 password: formData.password,
                 cpf_cnpj: formData.cpf_cnpj
             });
+            console.log("Login bem sucedido:", response.data);
             // alert(response.data.message);
             setShowModal(true);
         } catch (error) {
@@ -163,11 +164,27 @@ export default function Registro() {
                 </div>
             </div>
             <Modal
-                title="Cadastro realizado com sucesso!"
-                text="Seu cadastro foi concluído. Bem-vindo!"
+                title="Experimente o Tiago por 7 dias gratuitamente!"
+                text={
+                    <>
+                      <p>Você está prestes a iniciar seu teste grátis de 7 dias com acesso à nossa IA. Durante este período, você poderá aproveitar alguns de nossos recursos, como:</p>
+                      <ul className="list-disc list-inside ml-4">
+                        <li>Direito a 2 gráficos</li>
+                        <li>20 processos para análise</li>
+                      </ul>
+                      <p className="mt-4">Ao final dos 7 dias:</p>
+                      <ul className="list-disc list-inside ml-4">
+                        <li>Sua conta será desativada automaticamente.</li>
+                        <li>Você não terá mais acesso à IA.</li>
+                      </ul>
+                      <p className="mt-4">Para continuar usando nossos serviços, será necessário entrar em contato com nossa empresa e solicitar um plano para ativar uma conta paga.</p>
+                      <p className="mt-4">Quer continuar? Clique em "Confirmar" para iniciar seu teste grátis.</p>
+                    </>
+                  }
                 buttonText="OK"
                 onClick={() => setShowModal(false)}
                 showCancelButton={false}
+                open={showModal}
             />
         </main>
     )
