@@ -46,7 +46,6 @@ export default function Registro() {
             setShowModal(true);
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
-            // alert("Falha no registro. Tente novamente.");
             setShowAlertDialog(true);
         }
     };
