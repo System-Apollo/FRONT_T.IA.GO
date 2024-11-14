@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 import api from "../../utils/PostResponseApi";
-import { ArrowLeft, UserRound } from "lucide-react";
+import { ArrowLeft, ChartNoAxesCombined, SendHorizontal, UserRound } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -150,7 +150,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Quantidade de Processos",
             data: [graficoData.ativos, graficoData.arquivados],
-            backgroundColor: ["#4CAF50", "#F44336"],
+            backgroundColor: ["#1FB4D3", "#1FB4D3"],
           }],
         },
         tipo: "Ativos e Arquivados",
@@ -162,7 +162,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Processos Cadastrados",
             data: Object.values(graficoData["Data de cadastro_por_data"]),
-            backgroundColor: "#9933FF",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Cadastros por Data",
@@ -174,7 +174,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Processos Distribuídos",
             data: Object.values(graficoData["Data de distribuição_por_data"]),
-            backgroundColor: "#FF9933",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Distribuídos por Data",
@@ -186,7 +186,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Citações",
             data: Object.values(graficoData["Data de citação_por_data"]),
-            backgroundColor: "#3399FF",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Citações por Data",
@@ -198,7 +198,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Processos por Fase",
             data: Object.values(graficoData.fases),
-            backgroundColor: "#66BB6A",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Fases",
@@ -210,7 +210,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Processos por Órgão",
             data: Object.values(graficoData.orgaos),
-            backgroundColor: "#FFCC80",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Órgãos",
@@ -222,7 +222,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Quantidade de Processos por Sentença",
             data: Object.values(graficoData.sentencas),
-            backgroundColor: "#BA68C8",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Sentenças",
@@ -234,7 +234,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Dados dos Acordos",
             data: [graficoData["Quantidade de Acordos"], graficoData["Valor Total"]],
-            backgroundColor: ["#9933FF", "#4CAF50"],
+            backgroundColor: ["1FB4D3F", "#4CAF50"],
           }],
         },
         tipo: "Acordos",
@@ -246,7 +246,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Valor Total de Condenações (R$)",
             data: Object.values(graficoData.condenacao_por_estado),
-            backgroundColor: "#4CAF50",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Condenação por Estado",
@@ -258,7 +258,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Valor de Causa por Estado (R$)",
             data: Object.values(graficoData.valor_causa_por_estado),
-            backgroundColor: "#3F51B5",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Valor de Causa por Estado",
@@ -270,7 +270,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Média de Valor de Causa por Estado (R$)",
             data: Object.values(graficoData.media_valor_causa_por_estado),
-            backgroundColor: "#FFEB3B",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Média de Valor de Causa por Estado",
@@ -282,7 +282,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Quantidade de Processos",
             data: [graficoData.transitados, graficoData.nao_transitados],
-            backgroundColor: ["#4CAF50", "#E91E63"],
+            backgroundColor: ["1FB4D30", "#E91E63"],
           }],
         },
         tipo: "Transitado em Julgado",
@@ -294,7 +294,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Processos por Estado",
             data: Object.values(graficoData.estados),
-            backgroundColor: "#4CAF50",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Processos por Estado",
@@ -306,7 +306,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Número de Processos",
             data: Object.values(graficoData.reclamantes_multiplos),
-            backgroundColor: "#BA68C8",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Reclamantes com Mais de Um Processo",
@@ -318,7 +318,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Valor de Condenação por Estado",
             data: Object.values(graficoData.valor_condenacao_por_estado),
-            backgroundColor: "#FF5722",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Valor de Condenação por Estado",
@@ -330,7 +330,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Duração dos Processos (dias)",
             data: Object.values(graficoData.duração_por_processo),
-            backgroundColor: "#BA68C8",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Duração dos Processos Arquivados",
@@ -342,7 +342,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Média de Duração por Estado (dias)",
             data: Object.values(graficoData.media_duracao_por_estado),
-            backgroundColor: "#4CAF50",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Média de Duração por Estado",
@@ -354,7 +354,7 @@ const App: React.FC = () => {
           datasets: [{
             label: 'Valor Total de Condenação (R$)',
             data: Object.values(graficoData.valor_condenacao_por_comarca),
-            backgroundColor: "#FFEB3B",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Valor Total de Condenação por Comarca",
@@ -366,7 +366,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Média de Duração por Comarca (dias)",
             data: Object.values(graficoData.media_duracao_por_comarca),
-            backgroundColor: "#FFEB3B",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Média de Duração por Comarca",
@@ -378,7 +378,7 @@ const App: React.FC = () => {
           datasets: [{
             label: "Dias sem Movimentação",
             data: Object.values(graficoData.processos).slice(0, 4),
-            backgroundColor: "#FF5722",
+            backgroundColor: "#1FB4D3",
           }],
         },
         tipo: "Top 4 Processos com Maior Tempo sem Movimentação",
@@ -410,10 +410,10 @@ const App: React.FC = () => {
             <div className="flex flex-row gap-2 items-center">
               <ArrowLeft />
               <Link href="/">
-                <button>Voltar</button>
+                <button className="hover:bg-gray-200 p-2 rounded-lg duration-150">Voltar</button>
               </Link>
             </div>
-            <Image src={'/mfname.svg'} width={120} height={90} alt="MF name" />
+            <Image src={'/logoTIAGO.svg'} width={90} height={90} alt="MF name" />
             <div className="bg-gray-300 p-1 rounded-lg">
               <UserRound />
             </div>
@@ -432,10 +432,10 @@ const App: React.FC = () => {
             <div className="flex flex-row gap-2 items-center">
               <ArrowLeft />
               <Link href="/">
-                <button>Voltar</button>
+                <button className="hover:bg-gray-200 p-2 rounded-lg duration-150">Voltar</button>
               </Link>
             </div>
-            <Image src={'/mfname.svg'} width={120} height={90} alt="MF name" />
+            <Image src={'/logoTIAGO.svg'} width={90} height={90} alt="MF name" />
             <div className="bg-gray-300 p-1 rounded-lg">
               <UserRound />
             </div>
@@ -462,13 +462,19 @@ const App: React.FC = () => {
                   </div>
                 </div>
               ))}
+              {/* Exibir o gráfico somente se mostrarGrafico for true */}
+              {mostrarGrafico && dadosGrafico && dadosGrafico.labels && (
+                <div className="mt-10 w-full max-w-lg h-64 translate-y-[-10%] translate-x-[20%]">
+                  <Bar data={dadosGrafico} options={options} />
+                </div>
+              )}
             </div>
           </div>
         </>
       )}
 
       {/* Input fixo no rodapé, sempre visível */}
-      <div className="fixed bottom-0 bg-blue left-1/2 transform -translate-x-1/2 w-1/2 p-4 flex gap-2">
+      <div className="fixed flex flex-row items-center bottom-0 bg-chat left-1/2 transform -translate-x-1/2 w-full md:w-1/2 p-4 flex gap-2">
         <input
           name="pergunta"
           type="text"
@@ -478,28 +484,21 @@ const App: React.FC = () => {
           placeholder="Faça uma pergunta"
           className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none"
         />
-        <button onClick={handlePergunta} className="bg-blue-900 text-white p-2 rounded-lg">
-          Enviar
+        <button onClick={handlePergunta} className="bg-blue-900 hover:bg-blue-800 duration-150 flex flex-row items-center gap-1 text-white p-2 rounded-xl">
+          Go
+          <SendHorizontal />
         </button>
+        {dadosGrafico && (
+            <button
+              onClick={toggleMostrarGrafico}
+              className="bg-blue-900 text-white px-4 py-2 rounded-xl"
+            >
+              {mostrarGrafico ? "Ocultar Gráfico" : <ChartNoAxesCombined />}
+            </button>
+        )}
       </div>
 
-      {dadosGrafico && (
-  <div className="flex mt-4">
-    <button
-      onClick={toggleMostrarGrafico}
-      className="bg-blue-900 text-white px-4 py-2 rounded-lg"
-    >
-      {mostrarGrafico ? "Ocultar Gráfico" : "Mostrar Gráfico"}
-    </button>
-  </div>
-)}
 
-      {/* Exibir o gráfico somente se mostrarGrafico for true */}
-      {mostrarGrafico && dadosGrafico && dadosGrafico.labels && (
-        <div className="mt-6 w-full max-w-lg h-64">
-          <Bar data={dadosGrafico} options={options} />
-        </div>
-      )}
     </div>
 
   );
