@@ -6,9 +6,11 @@ import { useState } from "react";
 import { LoginApi } from "@/utils/PostLogin";
 import { useRouter } from "next/router";
 import { ArrowLeft } from "lucide-react";
+import AlertDialog from "@/components/alertDialog";
 
 
 export default function Login() {
+    const [showAlertDialog, setShowAlertDialog] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -31,14 +33,15 @@ export default function Login() {
                 email: formData.email,
                 password: formData.password,
             });
-            alert(response.data.message);
+            // alert(response.data.message);
             console.log(response.data);
             localStorage.setItem("token", response.data.tokens.access_token);
             localStorage.setItem("username", response.data.username);
             router.push("./tiago");
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
-            alert("Falha no registro. Tente novamente.");
+            // alert("Falha no registro. Tente novamente.");
+            setShowAlertDialog(true);
         }
     };
 
@@ -109,6 +112,15 @@ export default function Login() {
                     </form>
                 </div>
             </div>
+            <AlertDialog
+                title="Erro ao fazer login"
+                text="Não foi possível fazer login. Verifique sua conexão ou tente novamente mais tarde."
+                buttonText="Entendi"
+                onClick={() => {setShowAlertDialog(false)}}
+                showCancelButton={false}
+                open={showAlertDialog}
+                iconError={true}
+            />
         </main>
     )
 };
