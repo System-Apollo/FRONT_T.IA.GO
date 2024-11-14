@@ -6,9 +6,11 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import Modal from "@/components/modal";
 import { useRouter } from "next/router";
+import AlertDialog from "@/components/alertDialog";
 
 export default function Registro() {
     const [showModal, setShowModal] = useState(false);
+    const [showAlertDialog, setShowAlertDialog] = useState(false);
     const router =useRouter();
 
     const [formData, setFormData] = useState({
@@ -44,7 +46,8 @@ export default function Registro() {
             setShowModal(true);
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
-            alert("Falha no registro. Tente novamente.");
+            // alert("Falha no registro. Tente novamente.");
+            setShowAlertDialog(true);
         }
     };
 
@@ -190,8 +193,16 @@ export default function Registro() {
                   }
                 buttonText="Confirmar"
                 onClick={handleClickConfirm}
-                // showCancelButton={false}
                 open={showModal}
+            />
+            <AlertDialog
+                title="Erro ao cadastrar usuário"
+                text="Não foi possível criar seu usuário no momento. Verifique sua conexão ou tente novamente mais tarde."
+                buttonText="Entendi"
+                onClick={() => {setShowAlertDialog(false)}}
+                showCancelButton={false}
+                open={showAlertDialog}
+                iconError={true}
             />
         </main>
     )

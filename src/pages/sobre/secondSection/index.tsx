@@ -61,7 +61,7 @@ export default function SecondSection() {
                 </div>
                 <div className="mt-5 items-center justify-center gap-3 sm:flex">
                     <a 
-                        href="javascript:void()"
+                        href="#planos"
                         className={`block w-full mt-2 py-2.5 px-8 text-blue-700 hover:text-blue-500 bg-indigo-50 rounded-md font-medium duration-150 sm:w-auto transform transition-all duration-700 ease-in-out ${
                             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                         }`}
