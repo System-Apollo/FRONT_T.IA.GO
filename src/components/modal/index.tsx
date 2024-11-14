@@ -1,18 +1,26 @@
 import * as Dialog from "@radix-ui/react-dialog";
 
-export default function Modal () {
+interface ModalProps {
+    title: string;
+    text: string;
+    buttonText: string;
+    onClick: () => void;
+    showCancelButton?: boolean;
+}
+
+const Modal: React.FC<ModalProps> = ({title, text, buttonText, onClick, showCancelButton=true}) => {
   return (
     <Dialog.Root>
-      <Dialog.Trigger className="w-32 mx-auto py-2 ml-2 shadow-sm rounded-md bg-indigo-600 text-white mt-4 flex items-center justify-center">
+      {/* <Dialog.Trigger className="w-32 mx-auto py-2 ml-2 shadow-sm rounded-md bg-indigo-600 text-white mt-4 flex items-center justify-center">
         Click me
-      </Dialog.Trigger>
+      </Dialog.Trigger> */}
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 w-full h-full bg-black opacity-40" />
         <Dialog.Content className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-full max-w-lg mx-auto px-4">
           <div className="bg-white rounded-md shadow-lg">
             <div className="flex items-center justify-between p-4 border-b">
               <Dialog.Title className="text-lg font-medium text-gray-800 ">
-                Terms and agreements
+                {title}
               </Dialog.Title>
               <Dialog.Close className="p-2 text-gray-400 rounded-md hover:bg-gray-100">
                 <svg
@@ -30,34 +38,24 @@ export default function Modal () {
               </Dialog.Close>
             </div>
             <Dialog.Description className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500">
-              <p>
-                Commodo eget a et dignissim dignissim morbi vitae, mi. Mi
-                aliquam sit ultrices enim cursus. Leo sapien, pretium duis est
-                eu volutpat interdum eu non. Odio eget nullam elit laoreet.
-                Libero at felis nam at orci venenatis rutrum nunc. Etiam mattis
-                ornare pellentesque iaculis enim.
-              </p>
-              <p>
-                Felis eu non in aliquam egestas placerat. Eget maecenas ornare
-                venenatis lacus nunc, sit arcu. Nam pharetra faucibus eget
-                facilisis pulvinar eu sapien turpis at. Nec aliquam aliquam
-                blandit eu ipsum.
-              </p>
+                {text}
             </Dialog.Description>
             <div className="flex items-center gap-3 p-4 border-t">
               <Dialog.Close asChild>
-                <button className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2 ">
-                  Accept
+                <button onClick={onClick} className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2 ">
+                  {buttonText}
                 </button>
               </Dialog.Close>
-              <Dialog.Close asChild>
-                <button
-                  className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
-                  aria-label="Close"
-                >
-                  Cancel
-                </button>
-              </Dialog.Close>
+                {showCancelButton && (
+                    <Dialog.Close asChild>
+                        <button
+                        className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
+                        aria-label="Close"
+                        >
+                        Cancel
+                        </button>
+                    </Dialog.Close>
+                )}
             </div>
           </div>
         </Dialog.Content>
@@ -65,3 +63,4 @@ export default function Modal () {
     </Dialog.Root>
   );
 };
+export default Modal;
