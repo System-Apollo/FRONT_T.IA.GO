@@ -4,8 +4,14 @@ import { useState } from "react";
 import { registerUser } from './../../utils/PostReigisterUser';
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import Modal from "@/components/modal";
+import { useRouter } from "next/router";
+import AlertDialog from "@/components/alertDialog";
 
 export default function Registro() {
+    const [showModal, setShowModal] = useState(false);
+    const [showAlertDialog, setShowAlertDialog] = useState(false);
+    const router =useRouter();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -35,12 +41,19 @@ export default function Registro() {
                 password: formData.password,
                 cpf_cnpj: formData.cpf_cnpj
             });
-            alert(response.data.message);
+            console.log("Login bem sucedido:", response.data);
+            // alert(response.data.message);
+            setShowModal(true);
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
-            alert("Falha no registro. Tente novamente.");
+            setShowAlertDialog(true);
         }
     };
+
+    const handleClickConfirm = () => {
+        setShowModal(false);
+        router.push("/login");
+    }
 
     return (
         <main className="w-full flex">
@@ -159,6 +172,37 @@ export default function Registro() {
                     </form>
                 </div>
             </div>
+            <Modal
+                title="Usuário criado com sucesso!"
+                text={
+                    <>
+                      <p>Você está prestes a iniciar seu teste grátis de 7 dias com acesso à nossa IA. Durante este período, você poderá aproveitar alguns de nossos recursos, como:</p>
+                      <ul className="list-disc list-inside ml-4">
+                        <li>Direito a 2 gráficos.</li>
+                        <li>20 processos para análise.</li>
+                      </ul>
+                      <p className="mt-4">Ao final dos 7 dias:</p>
+                      <ul className="list-disc list-inside ml-4">
+                        <li>Sua conta será desativada automaticamente.</li>
+                        <li>Você não terá mais acesso à IA.</li>
+                      </ul>
+                      <p className="mt-4">Para continuar usando nossos serviços, será necessário entrar em contato com nossa empresa e solicitar um plano para ativar uma conta paga.</p>
+                      <p className="mt-4">Quer continuar? Clique em "<strong>Confirmar</strong>" e faça login para iniciar seu teste grátis.</p>
+                    </>
+                  }
+                buttonText="Confirmar"
+                onClick={handleClickConfirm}
+                open={showModal}
+            />
+            <AlertDialog
+                title="Erro ao cadastrar usuário"
+                text="Não foi possível criar seu usuário no momento. Verifique sua conexão ou tente novamente mais tarde."
+                buttonText="Entendi"
+                onClick={() => {setShowAlertDialog(false)}}
+                showCancelButton={false}
+                open={showAlertDialog}
+                iconError={true}
+            />
         </main>
     )
 }
