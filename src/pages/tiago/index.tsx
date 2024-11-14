@@ -26,6 +26,7 @@ const App: React.FC = () => {
   const [mostrarSaudacao, setMostrarSaudacao] = useState<boolean>(true);
   const [nomeUsuario, setNomeUsuario] = useState<string>("");
   const [tipoGrafico, setTipoGrafico] = useState<string>("");
+  const [loadingDots, setLoadingDots] = useState<string>("");
 
   // Estados para controlar o efeito de digitação
   const [textoSaudacao, setTextoSaudacao] = useState<string>("");
@@ -89,6 +90,13 @@ const App: React.FC = () => {
     return () => clearInterval(interval);
   }, [mensagem]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLoadingDots((prev) => (prev.length < 3 ? prev + "." : ""));
+    }, 500);
+    return () => clearInterval(interval);
+  }, []);
+
   const handlePergunta = async () => {
     setDigitando(true);
     setStatus("digitando...");
@@ -104,6 +112,7 @@ const App: React.FC = () => {
       const respostaRecebida = response.data.resposta;
 
       console.log(respostaRecebida);
+      setPergunta("");
 
       setDigitando(false);
       setStatus("online");
@@ -126,7 +135,6 @@ const App: React.FC = () => {
           setMostrarGrafico(false);
         }
       }
-      setPergunta("");
     } catch (error) {
       console.error("Erro ao enviar pergunta:", error);
     }
@@ -458,6 +466,13 @@ const App: React.FC = () => {
                       <p className="text-zinc-600 py-2 rounded-lg text-left">
                         {conversa.resposta}
                       </p>
+                      {digitando && (
+                        <div className="flex justify-start">
+                          <p className="text-zinc-600 font-medium bg-slate-200 p-2 rounded-lg max-w-xs text-left">
+                            Processando{loadingDots}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
