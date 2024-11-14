@@ -481,25 +481,33 @@ const App: React.FC = () => {
         <button onClick={handlePergunta} className="bg-blue-900 text-white p-2 rounded-lg">
           Enviar
         </button>
+        {dadosGrafico && (
+          <div className="flex mt-4">
+            <button
+              onClick={toggleMostrarGrafico}
+              className="bg-blue-900 text-white px-4 py-2 rounded-lg"
+            >
+              {mostrarGrafico ? "Ocultar Gráfico" : "Mostrar Gráfico"}
+            </button>
+          </div>
+        )}
       </div>
 
-      {dadosGrafico && (
-  <div className="flex mt-4">
-    <button
-      onClick={toggleMostrarGrafico}
-      className="bg-blue-900 text-white px-4 py-2 rounded-lg"
-    >
-      {mostrarGrafico ? "Ocultar Gráfico" : "Mostrar Gráfico"}
-    </button>
-  </div>
-)}
 
-      {/* Exibir o gráfico somente se mostrarGrafico for true */}
       {mostrarGrafico && dadosGrafico && dadosGrafico.labels && (
-        <div className="mt-6 w-full max-w-lg h-64">
-          <Bar data={dadosGrafico} options={options} />
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+          <div className="relative w-full max-w-lg h-64 bg-white p-4 rounded-lg">
+            <button
+              onClick={toggleMostrarGrafico}
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-900"
+            >
+              x
+            </button>
+            <Bar data={dadosGrafico} options={options} />
+          </div>
         </div>
       )}
+
     </div>
 
   );
