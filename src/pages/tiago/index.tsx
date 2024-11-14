@@ -455,7 +455,7 @@ const App: React.FC = () => {
               {conversas.map((conversa, index) => (
                 <div key={index} className="mb-4">
                   <div className="flex justify-end">
-                    <p className="text-zinc-600 font-medium bg-slate-200 p-2 rounded-lg max-w-xs text-right">
+                    <p className="text-zinc-600 font-medium bg-slate-200 p-2 rounded-lg max-w-sm text-right">
                       {conversa.pergunta}
                     </p>
                   </div>
