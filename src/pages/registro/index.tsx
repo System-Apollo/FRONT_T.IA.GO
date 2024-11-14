@@ -193,7 +193,6 @@ export default function Registro() {
                   }
                 buttonText="Confirmar"
                 onClick={handleClickConfirm}
-                // showCancelButton={false}
                 open={showModal}
             />
             <AlertDialog
