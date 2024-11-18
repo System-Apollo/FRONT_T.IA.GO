@@ -16,7 +16,6 @@
     --background-solid: #f6f6f6;
     --foreground: #ededed;
     --fontColor: linear-gradient(to bottom, #8AAAE8 0%, #043B98 100%);
-    --fontColorBlue: linear-gradient(to bottom, #6fc56f 0%, #0c3f97 100%);
   }
 }
 
@@ -81,7 +80,7 @@ body {
 }
 
 .text-gradientblue {
-  background: var(--fontColorBlue);
+  background: linear-gradient(to bottom, #6fc56f 0%, #0c3f97 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
