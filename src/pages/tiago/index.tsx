@@ -14,6 +14,16 @@ const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar), { ss
 interface Conversa {
   pergunta: string;
   resposta: string;
+  audiencias?: Audiencia[];
+}
+
+interface Audiencia {
+  processo: string;
+  data: string;
+  local: string;
+  foro: string;
+  tipo: string;
+  autor: string;
 }
 
 const App: React.FC = () => {
@@ -27,6 +37,7 @@ const App: React.FC = () => {
   const [tipoGrafico, setTipoGrafico] = useState<string>("");
   const [loadingDots, setLoadingDots] = useState<string>("");
 
+
   // Estados para controlar o efeito de digitação
   const [textoMensagem, setTextoMensagem] = useState<string>("");
   const saudacao = `Olá, ${nomeUsuario}`;
@@ -35,91 +46,114 @@ const App: React.FC = () => {
   const conversaRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (conversaRef.current) {
+      conversaRef.current.scrollTo({
+        top: conversaRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [conversas]);
+
+  // Carregar conversas do localStorage
+  useEffect(() => {
     const usuario = localStorage.getItem("username") || "Fulana";
-    setNomeUsuario(usuario)
+    setNomeUsuario(usuario);
 
     const savedConversas = localStorage.getItem("conversas");
-    setConversas(savedConversas ? JSON.parse(savedConversas) : [])
-  }, []);
-
-  useEffect(() => {
-    conversaRef.current?.scrollTo({ top: conversaRef.current.scrollHeight, behavior: "smooth" });
-  }, [conversas]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const savedConversas = localStorage.getItem("conversas");
-      setConversas(savedConversas ? JSON.parse(savedConversas) : []);
+    if (savedConversas) {
+      setConversas(JSON.parse(savedConversas));
     }
+    setMostrarSaudacao(false); // Desativa saudação após o carregamento inicial
   }, []);
 
-  useEffect(() => {
-    conversaRef.current?.scrollTo({ top: conversaRef.current.scrollHeight, behavior: "smooth" });
-  }, [conversas]);
-
+  // Salvar conversas no localStorage sempre que forem atualizadas
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("conversas", JSON.stringify(conversas));
     }
   }, [conversas]);
 
+  // Scroll automático para a última conversa
   useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setTextoMensagem(mensagem.slice(0, index));
-      index++;
-      if (index > mensagem.length) {
-        clearInterval(interval);
-      }
-    }, 50);
-    return () => clearInterval(interval);
-  }, [mensagem]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLoadingDots((prev) => (prev.length < 3 ? prev + "." : ""));
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
+    if (conversaRef.current) {
+      conversaRef.current.scrollTo({
+        top: conversaRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [conversas]);
 
   const handlePergunta = async () => {
+    if (!pergunta.trim()) return; // Evitar perguntas vazias
+
     setDigitando(true);
-    setMostrarSaudacao(false);
 
     const newConversa = { pergunta, resposta: "" };
     setConversas((prev) => [...prev, newConversa]);
-
-    console.log(pergunta);
 
     try {
       const response = await api.ResponseApi({ pergunta });
       const respostaRecebida = response.data.resposta;
 
-      console.log(respostaRecebida);
-      setPergunta("");
+      // Processar audiências e formatar resposta
+      const audiencias = parseAudiencias(respostaRecebida);
 
+      // Atualizar conversa com audiências
+      setPergunta("");
       setDigitando(false);
       setConversas((prev) => [
         ...prev.slice(0, -1),
-        { pergunta, resposta: respostaRecebida },
+        { pergunta, resposta: audiencias.length > 0 ? "" : respostaRecebida, audiencias },
       ]);
 
+      // Adicionar gráfico se aplicável
       if (response.data.grafico) {
-        if (response.data.grafico) {
-          const { dados, tipo } = configureGraficoData(response.data.grafico);
-          if (dados) {
-            setDadosGrafico(dados);
-            setTipoGrafico(tipo);
-            setMostrarGrafico(false);
-            console.log("Dados do gráfico definidos:", dados);
-          }
-        } else {
-          setMostrarGrafico(false);
+        const { dados, tipo } = configureGraficoData(response.data.grafico);
+        if (dados) {
+          setDadosGrafico(dados);
+          setMostrarGrafico(true);
         }
       }
     } catch (error) {
       console.error("Erro ao enviar pergunta:", error);
+      setDigitando(false);
     }
+  };
+
+  const parseAudiencias = (resposta: string): Audiencia[] => {
+    const linhas = resposta.split("\n").filter((linha) => linha.trim() !== "");
+    const audiencias: Audiencia[] = [];
+    let audienciaAtual: Partial<Audiencia> = {};
+
+    linhas.forEach((linha) => {
+      if (linha.startsWith("Processo")) {
+        if (audienciaAtual.processo) {
+          audiencias.push(audienciaAtual as Audiencia);
+        }
+
+        const match = linha.match(/Processo (\S+) com audiência em (\S+)/);
+        if (match) {
+          audienciaAtual = {
+            processo: match[1],
+            data: match[2],
+          };
+        }
+      } else if (linha.startsWith("Local:")) {
+        audienciaAtual.local = linha.replace("Local:", "").trim();
+      } else if (linha.startsWith("Foro:")) {
+        audienciaAtual.foro = linha.replace("Foro:", "").trim();
+      } else if (linha.startsWith("Tipo:")) {
+        audienciaAtual.tipo = linha.replace("Tipo:", "").trim();
+      } else if (linha.startsWith("Autor:")) {
+        audienciaAtual.autor = linha.replace("Autor:", "").trim();
+      }
+    });
+
+    if (audienciaAtual.processo) {
+      audiencias.push(audienciaAtual as Audiencia);
+    }
+
+    return audiencias;
   };
 
   useEffect(() => {
@@ -433,25 +467,52 @@ const App: React.FC = () => {
 
           {/* Conteúdo principal abaixo do header fixo */}
           <div className="flex flex-col w-full max-w-1/2 items-center flex-grow pt-16 overflow-auto">
-            <div ref={conversaRef} className="w-full p-4 max-w-3xl bg-transparent rounded-b-lg overflow-y-auto mb-12">
+          <div
+              ref={conversaRef}
+              className="w-full p-4 max-w-3xl bg-transparent rounded-b-lg overflow-y-auto mb-12"
+              style={{
+                maxHeight: "calc(100vh - 200px)",
+                scrollbarWidth: "thin",
+                scrollbarColor: "#ecefff #ecefff",
+              }}
+            >
               {conversas.map((conversa, index) => (
                 <div key={index} className="mb-4">
+                  {/* Pergunta do usuário */}
                   <div className="flex justify-end">
                     <p className="text-zinc-600 font-medium bg-slate-200 p-2 rounded-lg max-w-sm text-right">
                       {conversa.pergunta}
                     </p>
                   </div>
 
-                  <div className="flex flex-col justify-start mt-2 gap-2">
-                <div className="flex items-start flex-row justify-start gap-3">
-                  <Image src={'/tiagoprofileblue.svg'} width={40} height={40} className="rounded-full border border-gray-700" alt="MF name" />
-                  <p className="text-zinc-600 py-2 rounded-lg text-left">
-                    {index === conversas.length - 1 && digitando
-                      ? `${loadingDots}`
-                      : conversa.resposta}
-                  </p>
-                </div>
-              </div>
+                  {/* Resposta da API */}
+                  {conversa.audiencias && conversa.audiencias.length > 0 ? (
+                    <div className="mt-4 space-y-4">
+                      {conversa.audiencias.map((audiencia, idx) => (
+                        <div key={idx} className="p-4 bg-blue-200 rounded-lg shadow-md">
+                          <p className="text-zinc-900" ><strong>Processo:</strong> {audiencia.processo}</p>
+                          <p className="text-zinc-900"><strong>Data:</strong> {audiencia.data}</p>
+                          <p className="text-zinc-900"><strong>Local:</strong> {audiencia.local || "Não informado"}</p>
+                          <p className="text-zinc-900"><strong>Foro:</strong> {audiencia.foro}</p>
+                          <p className="text-zinc-900"><strong>Tipo:</strong> {audiencia.tipo}</p>
+                          <p className="text-zinc-900"><strong>Autor:</strong> {audiencia.autor}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex items-start flex-row justify-start gap-3 mt-2">
+                      <Image
+                        src={'/tiagoprofileblue.svg'}
+                        width={40}
+                        height={40}
+                        className="rounded-full border border-gray-700"
+                        alt="MF name"
+                      />
+                      <p className="text-zinc-600 py-2 rounded-lg text-left">
+                        {index === conversas.length - 1 && digitando ? loadingDots : conversa.resposta}
+                      </p>
+                    </div>
+                  )}
                 </div>
               ))}
               {/* Exibir o gráfico somente se mostrarGrafico for true */}
@@ -481,16 +542,14 @@ const App: React.FC = () => {
           <SendHorizontal />
         </button>
         {dadosGrafico && (
-            <button
-              onClick={toggleMostrarGrafico}
-              className="bg-blue-900 text-white px-4 py-2 rounded-xl"
-            >
-              {mostrarGrafico ? "Ocultar" : <ChartNoAxesCombined />}
-            </button>
+          <button
+            onClick={toggleMostrarGrafico}
+            className="bg-blue-900 text-white px-4 py-2 rounded-xl"
+          >
+            {mostrarGrafico ? "Ocultar" : <ChartNoAxesCombined />}
+          </button>
         )}
       </div>
-
-
     </div>
 
   );
