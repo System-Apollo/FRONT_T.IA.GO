@@ -11,6 +11,8 @@ import AlertDialog from "@/components/alertDialog";
 export default function Registro() {
     const [showModal, setShowModal] = useState(false);
     const [showAlertDialog, setShowAlertDialog] = useState(false);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
     const router =useRouter();
 
     const [formData, setFormData] = useState({
@@ -20,6 +22,7 @@ export default function Registro() {
         cpf_cnpj: "",
         email: "",
         password: "",
+        confirmPassword: "",
     });
 
     const handleChange = (e: any) => {
@@ -29,6 +32,11 @@ export default function Registro() {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
+
+        if (formData.password !== formData.confirmPassword) {
+            setShowAlertDialog(true);
+            return;
+        }
     
         console.log(formData);
     
@@ -144,24 +152,107 @@ export default function Registro() {
                             />
                         </div>
                         <div>
-                            <label className="font-medium">Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                required
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-blue-700 shadow-sm rounded-lg"
-                                value={formData.password}
-                                onChange={handleChange}
-                            />
+                            <label className="font-medium">Senha</label>
+                            <div className="relative mt-2">
+                                <input                                     
+                                    id="hs-toggle-password"
+                                    name="password"
+                                    type={isPasswordVisible ? "text" : "password"}
+                                    className="py-2 ps-4 pe-10 block w-full text-gray-500 bg-transparent outline-none border focus:border-blue-700 shadow-sm rounded-lg"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    />
+                                <button
+                                    type="button"
+                                    onClick={() => setIsPasswordVisible((prev) => !prev)} 
+                                    className="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600 dark:text-neutral-600 dark:focus:text-blue-500"
+                                >
+                                    {isPasswordVisible ? (
+                                        <svg
+                                            className="shrink-0 size-3.5"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    ) : (
+                                        <svg
+                                            className="shrink-0 size-3.5"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                                            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                                            <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                                            <line x1="2" x2="22" y1="2" y2="22"></line>
+                                        </svg>
+                                    )}
+                                </button>
+                            </div>
                         </div>
                         <div>
                             <label className="font-medium">Confirmar senha</label>
-                            <input
-                                type="password"
-                                name="confirmPassword"
-                                required
-                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-blue-700 shadow-sm rounded-lg"
-                            />
+                            <div className="relative mt-2">
+                                <input                      
+                                    name="confirmPassword"
+                                    type={isConfirmPasswordVisible ? "text" : "password"}
+                                    className="py-2 ps-4 pe-10 block w-full text-gray-500 bg-transparent outline-none border focus:border-blue-700 shadow-sm rounded-lg"
+                                    value={formData.confirmPassword} 
+                                    onChange={handleChange}
+                                    />
+                                <button
+                                    type="button"
+                                    onClick={() => setIsConfirmPasswordVisible((prev) => !prev)} 
+                                    className="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600 dark:text-neutral-600 dark:focus:text-blue-500"
+                                >
+                                    {isConfirmPasswordVisible ? (
+                                        <svg
+                                            className="shrink-0 size-3.5"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                    ) : (
+                                        <svg
+                                            className="shrink-0 size-3.5"
+                                            width="24"
+                                            height="24"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"></path>
+                                            <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"></path>
+                                            <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"></path>
+                                            <line x1="2" x2="22" y1="2" y2="22"></line>
+                                        </svg>
+                                    )}
+                                </button>
+                            </div>
                         </div>
                         <button
                             className="w-full px-4 py-2 text-white font-medium bg-blue-700 hover:bg-blue-600 active:bg-blue-600 rounded-lg duration-150"

@@ -56,7 +56,10 @@ export default function Initial() {
                             <h2 className="text-4xl text-indigo-50 font-medium md:text-5xl">
                                 Seu assistente inteligente para potenciar suas análises
                             </h2>
-                            <p className="text-gradient md:text-2xl text-xl">{textoMensagem}</p>
+                            <div>
+                                <p className="text-gradient md:text-2xl text-xl">{textoMensagem}</p>
+                                <p className="text-gray-500 text-sm mt-2">Versão <span className='border border-gray-500 text-gradientblue p-1 rounded-lg text-xs'>ALPHA</span></p>
+                            </div>
                             <div className="items-center gap-x-3 space-y-3 sm:flex sm:space-y-0">
                                 <Link href="/registro">
                                     <button className="block py-2 px-4 text-center text-white font-medium bg-blue-700 duration-150 hover:bg-blue-600 active:bg-indigo-700 rounded-lg shadow-lg hover:shadow-none">

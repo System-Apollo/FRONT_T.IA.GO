@@ -105,7 +105,12 @@ export default function Planos() {
                                 ""
                             )}
                             <div className="p-8 space-y-4 border-b border-gray-700">
-                                <span className="text-gradient font-medium">{item.name}</span>
+                                <div className='flex flex-row justify-between'>
+                                    <span className="text-gradient font-medium">{item.name}</span>
+                                    <div className='border border-gray-700 p-1 rounded-lg'>
+                                        <p className="text-gradientblue text-xs">ALPHA</p>
+                                    </div>
+                                </div>
                                 <div className="text-indigo-100 text-3xl font-semibold">
                                     R$ {item.price} <span className="text-xl text-gray-600 font-normal">/mês</span>
                                 </div>
