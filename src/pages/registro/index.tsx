@@ -176,7 +176,7 @@ export default function Registro() {
                 title="Usuário criado com sucesso!"
                 text={
                     <>
-                      <p>Você está prestes a iniciar seu teste grátis de 7 dias com acesso à nossa IA. Durante este período, você poderá aproveitar alguns de nossos recursos, como:</p>
+                      <p>Você está prestes a iniciar seu teste grátis de 7 dias com acesso à nossa IA versão alfa. Durante este período, você poderá aproveitar alguns de nossos recursos, como:</p>
                       <ul className="list-disc list-inside ml-4">
                         <li>Direito a 2 gráficos.</li>
                         <li>20 processos para análise.</li>

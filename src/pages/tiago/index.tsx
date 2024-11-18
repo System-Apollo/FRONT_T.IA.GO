@@ -495,7 +495,7 @@ const App: React.FC = () => {
           className="flex-grow p-2 border border-gray-300 rounded-lg focus:outline-none"
         />
         <button onClick={handlePergunta} className="bg-blue-900 hover:bg-blue-800 duration-150 flex flex-row items-center gap-1 text-white p-2 rounded-xl">
-          Go
+          GO
           <SendHorizontal />
         </button>
         {dadosGrafico && (
@@ -503,7 +503,7 @@ const App: React.FC = () => {
               onClick={toggleMostrarGrafico}
               className="bg-blue-900 text-white px-4 py-2 rounded-xl"
             >
-              {mostrarGrafico ? "Ocultar Gráfico" : <ChartNoAxesCombined />}
+              {mostrarGrafico ? "Ocultar" : <ChartNoAxesCombined />}
             </button>
         )}
       </div>
