@@ -1,5 +1,6 @@
 import Navbar from "@/pages/initial/Navbar";
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -88,7 +89,7 @@ export default function Initial() {
                                 isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
                             }`}
                         >
-                            <img src="/messageframe.svg" alt="Icon" className="w-3/4 h-1/4" />
+                            <Image width={100} height={100} src="/messageframe.svg" alt="Icon" className="w-3/4 h-1/4" />
                         </div>
                     </div>
                     <div
