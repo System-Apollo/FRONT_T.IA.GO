@@ -20,7 +20,6 @@ const App: React.FC = () => {
   const [pergunta, setPergunta] = useState<string>("");
   const [conversas, setConversas] = useState<Conversa[]>([]);
   const [digitando, setDigitando] = useState<boolean>(false);
-  const [status, setStatus] = useState<string>("online");
   const [dadosGrafico, setDadosGrafico] = useState<any>(null);
   const [mostrarGrafico, setMostrarGrafico] = useState<boolean>(false);
   const [mostrarSaudacao, setMostrarSaudacao] = useState<boolean>(true);
@@ -29,7 +28,6 @@ const App: React.FC = () => {
   const [loadingDots, setLoadingDots] = useState<string>("");
 
   // Estados para controlar o efeito de digitação
-  const [textoSaudacao, setTextoSaudacao] = useState<string>("");
   const [textoMensagem, setTextoMensagem] = useState<string>("");
   const saudacao = `Olá, ${nomeUsuario}`;
   const mensagem = "Como posso te ajudar hoje?";
@@ -65,19 +63,6 @@ const App: React.FC = () => {
     }
   }, [conversas]);
 
-  // Efeito de digitação
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      setTextoSaudacao(saudacao.slice(0, index));
-      index++;
-      if (index > saudacao.length) {
-        clearInterval(interval);
-      }
-    }, 100);
-    return () => clearInterval(interval);
-  }, [saudacao]);
-
   useEffect(() => {
     let index = 0;
     const interval = setInterval(() => {
@@ -99,7 +84,6 @@ const App: React.FC = () => {
 
   const handlePergunta = async () => {
     setDigitando(true);
-    setStatus("digitando...");
     setMostrarSaudacao(false);
 
     const newConversa = { pergunta, resposta: "" };
@@ -115,14 +99,12 @@ const App: React.FC = () => {
       setPergunta("");
 
       setDigitando(false);
-      setStatus("online");
       setConversas((prev) => [
         ...prev.slice(0, -1),
         { pergunta, resposta: respostaRecebida },
       ]);
 
       if (response.data.grafico) {
-        const { dados, tipo } = configureGraficoData(response.data.grafico);
         if (response.data.grafico) {
           const { dados, tipo } = configureGraficoData(response.data.grafico);
           if (dados) {
