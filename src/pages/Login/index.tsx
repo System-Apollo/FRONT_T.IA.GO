@@ -7,10 +7,12 @@ import { LoginApi } from "@/utils/PostLogin";
 import { useRouter } from "next/router";
 import { ArrowLeft } from "lucide-react";
 import AlertDialog from "@/components/alertDialog";
+import AlertDialog403 from "@/components/alertDialog403";
 
 
 export default function Login() {
     const [showAlertDialog, setShowAlertDialog] = useState(false);
+    const [show403Dialog, setShow403Dialog] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -38,10 +40,18 @@ export default function Login() {
             localStorage.setItem("token", response.data.tokens.access_token);
             localStorage.setItem("username", response.data.username);
             router.push("./tiago");
-        } catch (error) {
+        } catch (error: any) {
             console.error("Erro ao cadastrar:", error);
             // alert("Falha no registro. Tente novamente.");
-            setShowAlertDialog(true);
+            // setShowAlertDialog(true);
+
+
+            if (error.response && error.response.status === 403) {
+                setShow403Dialog(true); // Exibir modal para erro 403
+            } else if(error.response && error.response.status === 401){
+                setShowAlertDialog(true); // Exibir modal para outros erros
+            }
+
         }
     };
 
@@ -114,11 +124,20 @@ export default function Login() {
             </div>
             <AlertDialog
                 title="Erro ao fazer login"
-                text="Não foi possível fazer login. Verifique sua conexão ou tente novamente mais tarde."
+                text="Não foi possível fazer login. Verifique suas credenciais."
                 buttonText="Entendi"
                 onClick={() => {setShowAlertDialog(false)}}
                 showCancelButton={false}
                 open={showAlertDialog}
+                iconError={true}
+            />
+            <AlertDialog403
+                title="Erro ao fazer login"
+                text="Não foi possível fazer login. Entre em contato com o suporte para ativar sua conta."
+                buttonText="Entendi"
+                onClick={() => {setShow403Dialog(false)}}
+                showCancelButton={false}
+                open={show403Dialog}
                 iconError={true}
             />
         </main>
