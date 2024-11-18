@@ -5,10 +5,10 @@ import api from "../../utils/PostResponseApi";
 import { ArrowLeft, ChartNoAxesCombined, SendHorizontal, UserRound } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import withAuth from "@/components/auth/withAuth";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// Carregar o gráfico de forma dinâmica para desativar o SSR
 const Bar = dynamic(() => import("react-chartjs-2").then((mod) => mod.Bar), { ssr: false });
 
 interface Conversa {
@@ -126,9 +126,9 @@ const App: React.FC = () => {
         if (response.data.grafico) {
           const { dados, tipo } = configureGraficoData(response.data.grafico);
           if (dados) {
-            setDadosGrafico(dados); // Apenas defina se dados é válido
+            setDadosGrafico(dados);
             setTipoGrafico(tipo);
-            setMostrarGrafico(false); // Garante que o gráfico está oculto inicialmente
+            setMostrarGrafico(false);
             console.log("Dados do gráfico definidos:", dados);
           }
         } else {
@@ -514,4 +514,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default withAuth(App);
