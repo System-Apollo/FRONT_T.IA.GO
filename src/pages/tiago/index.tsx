@@ -461,20 +461,15 @@ const App: React.FC = () => {
                   </div>
 
                   <div className="flex flex-col justify-start mt-2 gap-2">
-                    <div className="flex items-start flex-row justify-start gap-3">
-                      <Image src={'/tiagoprofileblue.svg'} width={40} height={40} className="rounded-full border border-gray-700" alt="MF name" />
-                      <p className="text-zinc-600 py-2 rounded-lg text-left">
-                        {conversa.resposta}
-                      </p>
-                      {digitando && (
-                        <div className="flex justify-start">
-                          <p className="text-zinc-600 font-medium bg-slate-200 p-2 rounded-lg max-w-xs text-left">
-                            Processando{loadingDots}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                <div className="flex items-start flex-row justify-start gap-3">
+                  <Image src={'/tiagoprofileblue.svg'} width={40} height={40} className="rounded-full border border-gray-700" alt="MF name" />
+                  <p className="text-zinc-600 py-2 rounded-lg text-left">
+                    {index === conversas.length - 1 && digitando
+                      ? `${loadingDots}`
+                      : conversa.resposta}
+                  </p>
+                </div>
+              </div>
                 </div>
               ))}
               {/* Exibir o gráfico somente se mostrarGrafico for true */}
@@ -489,7 +484,7 @@ const App: React.FC = () => {
       )}
 
       {/* Input fixo no rodapé, sempre visível */}
-      <div className="fixed flex flex-row items-center bottom-0 bg-chat left-1/2 transform -translate-x-1/2 w-full md:w-1/2 p-4 flex gap-2">
+      <div className="fixed text-gray-600 flex flex-row items-center bottom-0 bg-chat left-1/2 transform -translate-x-1/2 w-full md:w-1/2 p-4 flex gap-2">
         <input
           name="pergunta"
           type="text"
