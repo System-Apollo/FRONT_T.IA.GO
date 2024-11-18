@@ -50,9 +50,8 @@ export default function Login() {
         <main className="w-full flex">
             <div className="relative flex-1 hidden items-center justify-center h-screen bg-gradient lg:flex">
                 <div className="absolute top-6 left-6 flex flex-row gap-2 items-center">
-                    <ArrowLeft />
                     <Link href="/">
-                        <button>Voltar</button>
+                        <button className='flex flex-row gap-2 hover:bg-gray-800 px-3 py-2 rounded-lg'><ArrowLeft /> Voltar</button>
                     </Link>
                 </div>
                 <div className="relative z-10 w-full max-w-md">
