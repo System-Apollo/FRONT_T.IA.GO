@@ -1,8 +1,8 @@
 export interface User{
-    name: string
-    last_name: string;
+    name?: string
+    last_name?: string;
     company?: string;
-    email?: string;
+    email: string;
     password: string;
     cpf_cnpj?: string;
 }

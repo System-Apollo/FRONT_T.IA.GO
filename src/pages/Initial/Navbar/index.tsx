@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
 
 const Navbar: React.FC = () => {
@@ -21,34 +23,39 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-none fixed w-full z-10">
+    <nav className="bg-none w-full z-10">
       <div className="container mx-auto px-4 sm:px-6 md:px-8 py-4 flex justify-between items-center h-16">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <img src="/mfdigitallaw.svg" alt="Logo" className="h-8 w-8" />
+          <Image src="/mfdigitallaw.svg" alt="Logo" width={160} height={50} />
         </div>
 
         {/* Navegação em telas grandes com espaçamento adicional */}
-        <div className="hidden md:flex space-x-8 lg:space-x-16">
+        <div className="hidden md:flex space-x-4 lg:space-x-4">
           <a href="#home" className="text-gray-300 hover:text-blue-500 px-4">
             Home
           </a>
-          <a href="#services" className="text-gray-300 hover:text-blue-500 px-4">
-            Serviços
-          </a>
-          <a href="#about" className="text-gray-300 hover:text-blue-500 px-4">
+          <a href="#sobre" className="text-gray-300 hover:text-blue-500 px-4">
             Sobre
           </a>
-          <a href="#contact" className="text-gray-300 hover:text-blue-500 px-4">
-            Contato
+          <a href="#solucoes" className="text-gray-300 hover:text-blue-500 px-4">
+            Soluções
+          </a>
+          <a href="#planos" className="text-gray-300 hover:text-blue-500 px-4">
+            Planos
+          </a>
+          <a href="#suporte" className="text-gray-300 hover:text-blue-500 px-4">
+            Suporte
           </a>
         </div>
 
         {/* Botão em telas grandes */}
         <div className="hidden md:flex ml-4">
+          <Link href="/registro">
             <button className="bg-blue-500 text-white bg-blue-700 duration-150 hover:bg-blue-600 active:bg-indigo-700 px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200">
                 Teste grátis
             </button>
+          </Link>
         </div>
 
         {/* Botão de Menu Responsivo */}
@@ -70,14 +77,17 @@ const Navbar: React.FC = () => {
             <a href="#home" className="block text-gray-600 hover:text-blue-500">
               Home
             </a>
-            <a href="#services" className="block text-gray-600 hover:text-blue-500">
-              Serviços
-            </a>
-            <a href="#about" className="block text-gray-600 hover:text-blue-500">
+            <a href="#sobre" className="block text-gray-600 hover:text-blue-500">
               Sobre
             </a>
-            <a href="#contact" className="block text-gray-600 hover:text-blue-500">
-              Contato
+            <a href="#solucoes" className="block text-gray-600 hover:text-blue-500">
+              Soluções
+            </a>
+            <a href="#planos" className="block text-gray-600 hover:text-blue-500">
+              Planos
+            </a>
+            <a href="#suporte" className="block text-gray-600 hover:text-blue-500">
+              Suporte
             </a>
           </div>
           <div className="px-4 py-3">

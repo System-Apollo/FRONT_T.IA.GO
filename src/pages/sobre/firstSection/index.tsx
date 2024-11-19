@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
 
 export default function FirstSection() {
@@ -5,6 +6,7 @@ export default function FirstSection() {
     const sectionRef = useRef(null);
 
     useEffect(() => {
+        const currentSectionRef = sectionRef.current;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -18,13 +20,13 @@ export default function FirstSection() {
             { threshold: 0.2 }
         );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+        if (currentSectionRef) {
+            observer.observe(currentSectionRef);
         }
 
         return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
+            if (currentSectionRef) {
+                observer.unobserve(currentSectionRef);
             }
         };
     }, []);
@@ -56,6 +58,7 @@ export default function FirstSection() {
     ]
     return (
         <section
+            id='sobre'
             ref={sectionRef}
             className={`py-14 transform transition-all duration-700 ease-in-out ${
                 isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
@@ -63,12 +66,12 @@ export default function FirstSection() {
         >
             <div className="max-w-screen-xl md:w-screen mx-auto md:px-8">
                 <div className="items-center flex flex-col md:flex-row justify-around gap-x-12 sm:px-4 md:px-0 lg:flex">
-                    <div className="flex-1 sm:hidden lg:block">
-                        <img src="/tiagochat.svg" className="md:max-w-lg sm:rounded-lg" alt="" />
+                    <div className="flex items-center justify-center sm:hidden lg:block">
+                        <Image src="/tiagochat.svg" width={390} height={350} className="md:max-w-lg sm:rounded-lg" alt="" />
                     </div>
                     <div className="max-w-xl px-4 space-y-3 mt-6 sm:px-0 md:mt-0 lg:max-w-2xl">
                         <div className="flex flex-row gap-x-2 items-center">
-                            <img src="/tiagologo.svg" className="md:max-w-lg sm:rounded-lg" alt="" />
+                            <Image src="/tiagologo.svg" width={160} height={90} className="md:max-w-lg sm:rounded-lg" alt="" />
                             <div className="flex flex-wrap items-center justify-center gap-6 xl:justify-start">
                                 {features.map((item, idx) => (
                                     <div key={idx} className="flex items-center gap-x-2 text-blue-800 text-sm font-medium">

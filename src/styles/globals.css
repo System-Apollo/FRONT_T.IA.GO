@@ -7,6 +7,7 @@
 :root {
   --background-solid: #f6f6f6;
   --background-gradient: linear-gradient(45deg, #020204, #070632);
+  --background-gradientlight: linear-gradient(45deg, #cbd4ff, #f6f6f6);
   --foreground: #171717;
 }
 
@@ -35,17 +36,33 @@
   background-color: #555;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: var(--foreground);
-  font-family: 'Inter';
+  font-family: 'Work Sans', 'Inter', sans-serif;
 }
+
 
 .bg-solid {
   background: var(--background-solid);
 }
 
+.bg-blue {
+  background: #cbd4ff;
+}
+.bg-chat {
+  background: #ecefff;
+}
+
 .bg-gradient {
   background: var(--background-gradient);
+}
+
+.bg-gradientlight {
+  background: var(--background-gradientlight);
 }
 
 .text-gradient {
@@ -60,4 +77,14 @@ body {
   background: var(--fontColor);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.text-gradientblue {
+  background: linear-gradient(to bottom, #6fc56f 0%, #0c3f97 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.flip-horizontal {
+  transform: scaleX(-1);
 }

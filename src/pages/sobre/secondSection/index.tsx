@@ -5,6 +5,7 @@ export default function SecondSection() {
     const sectionRef = useRef(null);
 
     useEffect(() => {
+        const currentSectionRef = sectionRef.current;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -18,13 +19,13 @@ export default function SecondSection() {
             { threshold: 0.4 }
         );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+        if (currentSectionRef) {
+            observer.observe(currentSectionRef);
         }
 
         return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
+            if (currentSectionRef) {
+                observer.unobserve(currentSectionRef);
             }
         };
     }, []);
@@ -47,12 +48,12 @@ export default function SecondSection() {
             
             <div className="max-w-xl mx-auto text-center relative z-10">
                 <div className="py-4">
-                    <h3 className={`text-3xl text-indigo-50 font-semibold md:text-4xl transform transition-all duration-700 ease-in-out ${
+                    <h3 className={`text-3xl text-white font-semibold md:text-4xl transform transition-all duration-700 ease-in-out ${
                         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                     }`}>
                         Jurídico orientado a objetos
                     </h3>
-                    <p className={`text-indigo-50 leading-relaxed mt-3 transform transition-all duration-700 ease-in-out ${
+                    <p className={`text-white leading-relaxed mt-3 transform transition-all duration-700 ease-in-out ${
                         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                     }`}>
                         Com nossa inteligência artificial generativa, você tem acesso às análises, reports e acompanhamentos dos seus processos, dando assertividade e agilidade para as tomadas de decisões.
@@ -60,7 +61,7 @@ export default function SecondSection() {
                 </div>
                 <div className="mt-5 items-center justify-center gap-3 sm:flex">
                     <a 
-                        href="javascript:void()"
+                        href="#planos"
                         className={`block w-full mt-2 py-2.5 px-8 text-blue-700 hover:text-blue-500 bg-indigo-50 rounded-md font-medium duration-150 sm:w-auto transform transition-all duration-700 ease-in-out ${
                             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
                         }`}

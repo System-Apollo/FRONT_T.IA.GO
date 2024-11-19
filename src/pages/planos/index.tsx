@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useState, useRef } from 'react';
 
 export default function Planos() {
@@ -5,6 +6,7 @@ export default function Planos() {
     const sectionRef = useRef(null);
 
     useEffect(() => {
+        const currentSectionRef = sectionRef.current;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -14,13 +16,13 @@ export default function Planos() {
             { threshold: 0.2 }
         );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+        if (currentSectionRef) {
+            observer.observe(currentSectionRef);
         }
 
         return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
+            if (currentSectionRef) {
+                observer.unobserve(currentSectionRef);
             }
         };
     }, []);
@@ -36,8 +38,9 @@ export default function Planos() {
                 "2 gráficos",
                 "Implantação automática",
                 "Limitado a 20 processos",
-                "Ilimitado por 7 dias",
+                "Uso limitado a 7 dias",
             ],
+            isButton: true,
         },
         {
             name: "Plano Assistente",
@@ -49,9 +52,10 @@ export default function Planos() {
                 "2 gráficos",
                 "Implantação em até 30 dias",
                 "Limitado a 500 processos",
-                "Até 200 perguntas (tokens)",
+                "Até 200 perguntas mensais (iguais ou diferentes)",
                 "Suporte pelo Whatsapp",
             ],
+            isButton: true,
         },
         {
             name: "Plano Analista",
@@ -62,16 +66,17 @@ export default function Planos() {
                 "1 usuário",
                 "7 gráficos",
                 "Implantação em até 30 dias",
-                "Limitado a 200 processos",
-                "Até 400 perguntas (tokens)",
+                "Limitado a 2000 processos",
+                "Até 400 perguntas mensais (iguais ou diferentes)",
                 "Suporte pelo Whatsapp",
                 "Acesso via Telegram",
             ],
+            isButton: false,
         },
     ];
 
     return (
-        <section ref={sectionRef} className="py-14 bg-gradient w-full">
+        <section id='planos' ref={sectionRef} className="py-14 bg-gradient w-full">
             <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
                 <div className={`relative max-w-xl mx-auto sm:text-center transform transition-all duration-700 ease-in-out ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
@@ -100,37 +105,54 @@ export default function Planos() {
                                 ""
                             )}
                             <div className="p-8 space-y-4 border-b border-gray-700">
-                                <span className="text-gradient font-medium">{item.name}</span>
+                                <div className='flex flex-row justify-between'>
+                                    <span className="text-gradient font-medium">{item.name}</span>
+                                    <div className='border border-gray-700 p-1 rounded-lg'>
+                                        <p className="text-gradientblue text-xs">ALPHA</p>
+                                    </div>
+                                </div>
                                 <div className="text-indigo-100 text-3xl font-semibold">
                                     R$ {item.price} <span className="text-xl text-gray-600 font-normal">/mês</span>
                                 </div>
                                 <p className="text-gray-400">{item.desc}</p>
-                                <button className="px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-gray-800 bg-indigo-100 hover:text-gray-600 active:bg-indigo-700">
-                                    Começar
-                                </button>
                             </div>
-                            <ul className="p-8 space-y-3">
-                                <li className="pb-2 text-indigo-100 font-medium">
-                                    <p>Acompanha</p>
-                                </li>
-                                {item.features.map((featureItem, idx) => (
-                                    <li key={idx} className="flex items-center text-gray-400 gap-5">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            className="h-5 w-5 text-green-500"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
-                                        >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                clipRule="evenodd"
-                                            ></path>
-                                        </svg>
-                                        {featureItem}
+                            <div className='flex flex-col justify-between h-full pb-6 items-center'>
+                                <ul className="p-8 space-y-3 w-full">
+                                    <li className="pb-2 text-indigo-100 font-medium">
+                                        <p>Acompanha</p>
                                     </li>
-                                ))}
-                            </ul>
+                                    {item.features.map((featureItem, idx) => (
+                                        <li key={idx} className="flex items-center text-gray-400 gap-5">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className="h-5 w-5 text-green-500"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clipRule="evenodd"
+                                                ></path>
+                                            </svg>
+                                            {featureItem}
+                                        </li>
+                                    ))}
+                                </ul>
+                                <div className='w-full px-7'>
+                                    {item.isButton ? (
+                                        <Link href={'/registro'}>
+                                            <button className="px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-gray-800 bg-indigo-100 hover:text-gray-600 active:bg-indigo-700">
+                                                Começar
+                                            </button>
+                                        </Link>
+                                    ) : (
+                                        <button className="bg-gray-300 px-4 py-2 rounded-md cursor-not-allowed opacity-50 w-full" disabled>
+                                            Disponível em breve
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>

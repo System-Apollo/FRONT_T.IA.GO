@@ -5,6 +5,7 @@ export default function FirstSection() {
     const sectionRef = useRef(null);
 
     useEffect(() => {
+        const currentSectionRef = sectionRef.current;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
@@ -14,13 +15,13 @@ export default function FirstSection() {
             { threshold: 0.4 }
         );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+        if (currentSectionRef) {
+            observer.observe(currentSectionRef);
         }
 
         return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
+            if (currentSectionRef) {
+                observer.unobserve(currentSectionRef);
             }
         };
     }, []);
@@ -28,9 +29,9 @@ export default function FirstSection() {
     const features = [
         {
             icon:
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                </svg>,
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+            </svg>,
             title: "Maior controle",
             desc: "Precisão e a rapidez são fatores determinantes para o sucesso de um processo."
         },
@@ -44,9 +45,9 @@ export default function FirstSection() {
         },
         {
             icon:
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-                </svg>,
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+            </svg>,
             title: "Maior assertividade",
             desc: "Processamento de uma vasta quantidade de dados em tempo real, extraindo insights e padrões."
         },
@@ -77,7 +78,7 @@ export default function FirstSection() {
     ]
 
     return (
-        <section ref={sectionRef} className="py-14">
+        <section id='solucoes' ref={sectionRef} className="py-14">
             <div className="max-w-screen-xl mx-auto px-4 text-center text-gray-600 md:px-8">
                 <div className={`max-w-2xl mx-auto transform transition-all duration-700 ease-in-out ${
                         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
