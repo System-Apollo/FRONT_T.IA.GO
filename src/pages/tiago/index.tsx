@@ -6,6 +6,7 @@ import { ArrowLeft, ChartNoAxesCombined, SendHorizontal, UserRound } from "lucid
 import Link from "next/link";
 import Image from "next/image";
 import withAuth from "@/components/auth/withAuth";
+import Head from "next/head";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -70,7 +71,7 @@ const App: React.FC = () => {
       const interval = setInterval(() => {
         setLoadingDots((prev) => (prev.length < 3 ? prev + "." : ""));
       }, 500); // Intervalo para alternar os pontos
-  
+
       return () => clearInterval(interval);
     } else {
       setLoadingDots(""); // Reseta os pontos quando `digitando` for falso
@@ -102,7 +103,7 @@ const App: React.FC = () => {
     }
   }, [conversas]);
 
-  
+
   // Salvar conversas no localStorage sempre que forem atualizadas
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -466,6 +467,11 @@ const App: React.FC = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-chat">
+      <Head>
+        <title>T.IA-GO</title>
+        <meta name="description" content="Plataforma de chat interativo com visualização de dados e gráficos" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       {/* Tela de saudação ocupando toda a área sem scroll */}
       {mostrarSaudacao ? (
         <div className="fixed inset-0 flex flex-col items-center justify-center overflow-hidden">
@@ -507,7 +513,7 @@ const App: React.FC = () => {
 
           {/* Conteúdo principal abaixo do header fixo */}
           <div className="flex flex-col w-full max-w-1/2 items-center flex-grow pt-16 overflow-auto">
-          <div
+            <div
               ref={conversaRef}
               className="w-full p-4 max-w-3xl bg-transparent rounded-b-lg overflow-y-auto mb-12"
               style={{
@@ -515,7 +521,7 @@ const App: React.FC = () => {
                 scrollbarWidth: "thin",
                 scrollbarColor: "#ecefff #ecefff",
               }}
-            >
+            >
               {conversas.map((conversa, index) => (
                 <div key={index} className="mb-4">
                   {/* Pergunta do usuário */}
