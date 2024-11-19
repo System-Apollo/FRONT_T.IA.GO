@@ -7,13 +7,14 @@ import { ArrowLeft } from "lucide-react";
 import Modal from "@/components/modal";
 import { useRouter } from "next/router";
 import AlertDialog from "@/components/alertDialog";
+import Head from "next/head";
 
 export default function Registro() {
     const [showModal, setShowModal] = useState(false);
     const [showAlertDialog, setShowAlertDialog] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
-    const router =useRouter();
+    const router = useRouter();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -37,9 +38,9 @@ export default function Registro() {
             setShowAlertDialog(true);
             return;
         }
-    
+
         console.log(formData);
-    
+
         try {
             const response = await registerUser({
                 name: formData.name,
@@ -65,6 +66,11 @@ export default function Registro() {
 
     return (
         <main className="w-full flex">
+            <Head>
+                <title>Registro</title>
+                <meta name="description" content="Plataforma de chat interativo com visualização de dados e gráficos" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+            </Head>
             <div className="relative flex-1 flex-col hidden items-center justify-center h-screen bg-gradient lg:flex">
                 <div className="absolute top-6 left-6 flex flex-row gap-2 items-center">
                     <Link href="/">
@@ -153,17 +159,17 @@ export default function Registro() {
                         <div>
                             <label className="font-medium">Senha</label>
                             <div className="relative mt-2">
-                                <input                                     
+                                <input
                                     id="hs-toggle-password"
                                     name="password"
                                     type={isPasswordVisible ? "text" : "password"}
                                     className="py-2 ps-4 pe-10 block w-full text-gray-500 bg-transparent outline-none border focus:border-blue-700 shadow-sm rounded-lg"
                                     value={formData.password}
                                     onChange={handleChange}
-                                    />
+                                />
                                 <button
                                     type="button"
-                                    onClick={() => setIsPasswordVisible((prev) => !prev)} 
+                                    onClick={() => setIsPasswordVisible((prev) => !prev)}
                                     className="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600 dark:text-neutral-600 dark:focus:text-blue-500"
                                 >
                                     {isPasswordVisible ? (
@@ -205,16 +211,16 @@ export default function Registro() {
                         <div>
                             <label className="font-medium">Confirmar senha</label>
                             <div className="relative mt-2">
-                                <input                      
+                                <input
                                     name="confirmPassword"
                                     type={isConfirmPasswordVisible ? "text" : "password"}
                                     className="py-2 ps-4 pe-10 block w-full text-gray-500 bg-transparent outline-none border focus:border-blue-700 shadow-sm rounded-lg"
-                                    value={formData.confirmPassword} 
+                                    value={formData.confirmPassword}
                                     onChange={handleChange}
-                                    />
+                                />
                                 <button
                                     type="button"
-                                    onClick={() => setIsConfirmPasswordVisible((prev) => !prev)} 
+                                    onClick={() => setIsConfirmPasswordVisible((prev) => !prev)}
                                     className="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-400 rounded-e-md focus:outline-none focus:text-blue-600 dark:text-neutral-600 dark:focus:text-blue-500"
                                 >
                                     {isConfirmPasswordVisible ? (
@@ -266,20 +272,20 @@ export default function Registro() {
                 title="Usuário criado com sucesso!"
                 text={
                     <>
-                      <p>Você está prestes a iniciar seu teste grátis de 7 dias com acesso à nossa IA versão alfa. Durante este período, você poderá aproveitar alguns de nossos recursos, como:</p>
-                      <ul className="list-disc list-inside ml-4">
-                        <li>Direito a 2 gráficos.</li>
-                        <li>20 processos para análise.</li>
-                      </ul>
-                      <p className="mt-4">Ao final dos 7 dias:</p>
-                      <ul className="list-disc list-inside ml-4">
-                        <li>Sua conta será desativada automaticamente.</li>
-                        <li>Você não terá mais acesso à IA.</li>
-                      </ul>
-                      <p className="mt-4">Para continuar usando nossos serviços, será necessário entrar em contato com nossa empresa e solicitar um plano para ativar uma conta paga.</p>
-                      <p className="mt-4">Quer continuar? Clique em &quot<strong>Confirmar</strong>&quot e faça login para iniciar seu teste grátis.</p>
+                        <p>Você está prestes a iniciar seu teste grátis de 7 dias com acesso à nossa IA versão alfa. Durante este período, você poderá aproveitar alguns de nossos recursos, como:</p>
+                        <ul className="list-disc list-inside ml-4">
+                            <li>Direito a 2 gráficos.</li>
+                            <li>20 processos para análise.</li>
+                        </ul>
+                        <p className="mt-4">Ao final dos 7 dias:</p>
+                        <ul className="list-disc list-inside ml-4">
+                            <li>Sua conta será desativada automaticamente.</li>
+                            <li>Você não terá mais acesso à IA.</li>
+                        </ul>
+                        <p className="mt-4">Para continuar usando nossos serviços, será necessário entrar em contato com nossa empresa e solicitar um plano para ativar uma conta paga.</p>
+                        <p className="mt-4">Quer continuar? Clique em &quot<strong>Confirmar</strong>&quot e faça login para iniciar seu teste grátis.</p>
                     </>
-                  }
+                }
                 buttonText="Confirmar"
                 onClick={handleClickConfirm}
                 open={showModal}
@@ -288,7 +294,7 @@ export default function Registro() {
                 title="Erro ao cadastrar usuário"
                 text="Não foi possível criar seu usuário no momento. Verifique sua conexão ou tente novamente mais tarde."
                 buttonText="Entendi"
-                onClick={() => {setShowAlertDialog(false)}}
+                onClick={() => { setShowAlertDialog(false) }}
                 showCancelButton={false}
                 open={showAlertDialog}
                 iconError={true}
