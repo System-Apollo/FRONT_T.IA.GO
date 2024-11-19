@@ -33,17 +33,45 @@ const App: React.FC = () => {
   const [dadosGrafico, setDadosGrafico] = useState<any>(null);
   const [mostrarGrafico, setMostrarGrafico] = useState<boolean>(false);
   const [mostrarSaudacao, setMostrarSaudacao] = useState<boolean>(true);
-  const [nomeUsuario, setNomeUsuario] = useState<string>("");
   const [tipoGrafico, setTipoGrafico] = useState<string>("");
   const [loadingDots, setLoadingDots] = useState<string>("");
 
 
   // Estados para controlar o efeito de digitação
   const [textoMensagem, setTextoMensagem] = useState<string>("");
-  const saudacao = `Olá, ${nomeUsuario}`;
-  const mensagem = "Como posso te ajudar hoje?";
+
+  const username = localStorage.getItem("username");
+  const saudacao = `Olá, ${username}`;
 
   const conversaRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (mostrarSaudacao) {
+      setTextoMensagem("");
+      const mensagemCompleta = `CComo posso te ajudar hoje?`;
+
+      let index = 0;
+      const intervalo = setInterval(() => {
+        setTextoMensagem((prev) => prev + mensagemCompleta.charAt(index));
+        index++;
+        if (index === mensagemCompleta.length) clearInterval(intervalo);
+      }, 100);
+
+      return () => clearInterval(intervalo);
+    }
+  }, [mostrarSaudacao]);
+
+  useEffect(() => {
+    if (digitando) {
+      const interval = setInterval(() => {
+        setLoadingDots((prev) => (prev.length < 3 ? prev + "." : ""));
+      }, 500); // Intervalo para alternar os pontos
+  
+      return () => clearInterval(interval);
+    } else {
+      setLoadingDots(""); // Reseta os pontos quando `digitando` for falso
+    }
+  }, [digitando]);
 
   useEffect(() => {
     if (conversaRef.current) {
@@ -54,18 +82,23 @@ const App: React.FC = () => {
     }
   }, [conversas]);
 
-  // Carregar conversas do localStorage
   useEffect(() => {
-    const usuario = localStorage.getItem("username") || "Fulana";
-    setNomeUsuario(usuario);
-
-    const savedConversas = localStorage.getItem("conversas");
-    if (savedConversas) {
-      setConversas(JSON.parse(savedConversas));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("conversas", JSON.stringify(conversas));
     }
-    setMostrarSaudacao(false); // Desativa saudação após o carregamento inicial
-  }, []);
+  }, [conversas]);
 
+  // Scroll automático
+  useEffect(() => {
+    if (conversaRef.current) {
+      conversaRef.current.scrollTo({
+        top: conversaRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [conversas]);
+
+  
   // Salvar conversas no localStorage sempre que forem atualizadas
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -84,7 +117,9 @@ const App: React.FC = () => {
   }, [conversas]);
 
   const handlePergunta = async () => {
-    if (!pergunta.trim()) return; // Evitar perguntas vazias
+    if (!pergunta.trim()) return;
+
+    setMostrarSaudacao(false);
 
     setDigitando(true);
 
@@ -111,6 +146,7 @@ const App: React.FC = () => {
         const { dados, tipo } = configureGraficoData(response.data.grafico);
         if (dados) {
           setDadosGrafico(dados);
+          setTipoGrafico(tipo);
           setMostrarGrafico(true);
         }
       }
