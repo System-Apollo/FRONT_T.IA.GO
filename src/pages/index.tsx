@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <main className={`flex min-h-screen flex-col items-center justify-between font-sans ${inter.className}`}>
       <Head>
-        <title>MfDigitalLaw</title>
+        <title>mftiago</title>
         <meta name="description" content="Plataforma de chat interativo com visualização de dados e gráficos" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>

@@ -54,7 +54,7 @@ export default function Initial() {
                         >
                             <h1 className="text-sm text-gradient font-bold text-xl">TIAGO</h1>
                             <h2 className="text-4xl text-indigo-50 font-medium md:text-5xl">
-                                Seu assistente inteligente para potenciar suas análises
+                                Seu assistente inteligente para potencializar suas análises
                             </h2>
                             <div>
                                 <p className="text-gradient md:text-2xl text-xl">{textoMensagem}</p>
