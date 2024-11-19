@@ -36,31 +36,35 @@ const App: React.FC = () => {
   const [mostrarSaudacao, setMostrarSaudacao] = useState<boolean>(true);
   const [tipoGrafico, setTipoGrafico] = useState<string>("");
   const [loadingDots, setLoadingDots] = useState<string>("");
+  const [nomeUsuario, setNomeUsuario] = useState<string>("");
 
 
   // Estados para controlar o efeito de digitação
   const [textoMensagem, setTextoMensagem] = useState<string>("");
-
-  const username = localStorage.getItem("username");
-  const saudacao = `Olá, ${username}`;
-
-  const conversaRef = useRef<HTMLDivElement | null>(null);
+  const saudacao = `Olá, ${nomeUsuario}`;
+  const mensagem = "Como posso te ajudar hoje?";
 
   useEffect(() => {
-    if (mostrarSaudacao) {
-      setTextoMensagem("");
-      const mensagemCompleta = `CComo posso te ajudar hoje?`;
+    const usuario = localStorage.getItem("username") || "Fulana";
+    setNomeUsuario(usuario)
 
-      let index = 0;
-      const intervalo = setInterval(() => {
-        setTextoMensagem((prev) => prev + mensagemCompleta.charAt(index));
-        index++;
-        if (index === mensagemCompleta.length) clearInterval(intervalo);
-      }, 100);
+    const savedConversas = localStorage.getItem("conversas");
+    setConversas(savedConversas ? JSON.parse(savedConversas) : [])
+  }, []);
 
-      return () => clearInterval(intervalo);
-    }
-  }, [mostrarSaudacao]);
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setTextoMensagem(mensagem.slice(0, index));
+      index++;
+      if (index > mensagem.length) {
+        clearInterval(interval);
+      }
+    }, 50);
+    return () => clearInterval(interval);
+  }, [mensagem]);
+
+  const conversaRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (digitando) {
