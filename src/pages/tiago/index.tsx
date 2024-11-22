@@ -125,13 +125,15 @@ const App: React.FC = () => {
     if (!pergunta.trim()) return;
 
     setMostrarSaudacao(false);
-
+    setDadosGrafico(null);
+    setMostrarGrafico(false);
     setDigitando(true);
 
     const newConversa = { pergunta, resposta: "" };
     setConversas((prev) => [...prev, newConversa]);
 
     try {
+      setPergunta("");
       const response = await api.ResponseApi({ pergunta });
       const respostaRecebida = response.data.resposta;
 
@@ -139,7 +141,6 @@ const App: React.FC = () => {
       const audiencias = parseAudiencias(respostaRecebida);
 
       // Atualizar conversa com audiências
-      setPergunta("");
       setDigitando(false);
       setConversas((prev) => [
         ...prev.slice(0, -1),
