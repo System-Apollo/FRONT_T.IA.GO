@@ -125,7 +125,8 @@ const App: React.FC = () => {
     if (!pergunta.trim()) return;
 
     setMostrarSaudacao(false);
-
+    setDadosGrafico(null);
+    setMostrarGrafico(false);
     setDigitando(true);
 
     const newConversa = { pergunta, resposta: "" };
