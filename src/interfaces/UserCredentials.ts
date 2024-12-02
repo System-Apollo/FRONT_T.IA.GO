@@ -1,8 +1,12 @@
 export interface User{
-    name?: string
+    username?: string
+    name?: string;
     last_name?: string;
-    company?: string;
-    email: string;
-    password: string;
+    company_name?: string;
+    email?: string;
+    password?: string;
     cpf_cnpj?: string;
+    is_activity?: string;
+    requests_used?: string;
+    limit_requests?: string;
 }
