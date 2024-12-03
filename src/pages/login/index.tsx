@@ -19,7 +19,6 @@ export default function Login() {
         password: "",
     });
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    //Poh Leticia 2x
     const router = useRouter();
 
     const handleChange = (e: any) => {
@@ -41,7 +40,12 @@ export default function Login() {
             console.log(response.data);
             localStorage.setItem("token", response.data.tokens.access_token);
             localStorage.setItem("username", response.data.username);
-            router.push("./tiago");
+            if(response.data.role === 'Admin') {
+                router.push("./users")
+            } else {
+                router.push("./tiago");
+            }
+            
         } catch (error: any) {
             console.error("Erro ao cadastrar:", error);
             // alert("Falha no registro. Tente novamente.");
