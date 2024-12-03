@@ -12,7 +12,37 @@ export default function Users() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [userColors, setUserColors] = useState<Record<string, string>>({});
-    const [updatedUser, setUpdatedUser] = useState<Partial<User>>({}); // Novo estado para os dados atualizados
+    const [updatedUser, setUpdatedUser] = useState<Partial<User>>({});
+    const [searchQuery, setSearchQuery] = useState<string>("");
+    const [selectedStatus, setSelectedStatus] = useState<string>("all");
+    const [selectedCompany, setSelectedCompany] = useState<string>("all");
+
+    const filterData = () => {
+        return data
+            .filter((item) => {
+                const matchesSearch =
+                    item.username?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    item.company_name?.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchesSearch;
+            })
+            .filter((item) => {
+                if (selectedStatus === "all") return true;
+                return String(item.is_activity).toLowerCase() === selectedStatus;
+            })
+            .filter((item) => {
+                if (selectedCompany === "all") return true;
+                return item.company_name === selectedCompany;
+            });
+    };
+
+    const filteredData = filterData();
+
+    const clearFilters = () => {
+        setSearchQuery("");
+        setSelectedStatus("all");
+        setSelectedCompany("all");
+    };
+
 
     const saveColorsToLocalStorage = (colors: Record<string, string>) => {
         localStorage.setItem("userColors", JSON.stringify(colors));
@@ -129,6 +159,57 @@ export default function Users() {
                 </p>
             </section>
 
+            <section className="mb-4">
+                <div className="flex flex-wrap gap-4 items-center">
+                    <div className="flex-1 ml-12 max-w-xs">
+                        <input
+                            type="text"
+                            placeholder="Pesquisar por usuário ou empresa..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full border border-gray-300 rounded-lg p-2 text-sm text-gray-600"
+                        />
+                    </div>
+
+                    <div className="ml-60">
+                        <select
+                            value={selectedStatus}
+                            onChange={(e) => setSelectedStatus(e.target.value)}
+                            className="border border-gray-300 rounded-lg p-2 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="all">Todos os Status</option>
+                            <option value="true">Ativo</option>
+                            <option value="false">Inativo</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <select
+                            value={selectedCompany}
+                            onChange={(e) => setSelectedCompany(e.target.value)}
+                            className="border border-gray-300 rounded-lg p-2 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="all">Todas as Empresas</option>
+                            {Array.from(new Set(data.map((item) => item.company_name)))
+                                .filter(Boolean)
+                                .map((company, index) => (
+                                    <option key={index} value={company}>
+                                        {company}
+                                    </option>
+                                ))}
+                        </select>
+                    </div>
+
+                    <button
+                        onClick={clearFilters}
+                        className="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-700"
+                    >
+                        Limpar filtros
+                    </button>
+                </div>
+            </section>
+
+
             <section className="rounded-lg p-6">
                 <div className="md:p-6">
                     {loading ? (
@@ -146,7 +227,7 @@ export default function Users() {
                             </div>
 
                             <div className="flex flex-col">
-                                {data.map((item, index) => {
+                                {filteredData.map((item, index) => {
                                     const initials = getInitials(item.username || "N/A");
                                     const color = item.username
                                         ? userColors[item.username] || "bg-gray-500"
