@@ -5,6 +5,7 @@ import Modal from "@/components/modalEdit";
 import GetAllUsers from "@/utils/GetAllUsers";
 import UpdateUser from "@/utils/UpdateUser";
 import { User } from "@/interfaces/UserCredentials";
+import Link from "next/link";
 
 export default function Users() {
     const [data, setData] = useState<User[]>([]);
@@ -16,6 +17,8 @@ export default function Users() {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [selectedStatus, setSelectedStatus] = useState<string>("all");
     const [selectedCompany, setSelectedCompany] = useState<string>("all");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(6); // Número de itens por página
 
     const filterData = () => {
         return data
@@ -37,12 +40,15 @@ export default function Users() {
 
     const filteredData = filterData();
 
+    const paginatedData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
     const clearFilters = () => {
         setSearchQuery("");
         setSelectedStatus("all");
         setSelectedCompany("all");
     };
-
 
     const saveColorsToLocalStorage = (colors: Record<string, string>) => {
         localStorage.setItem("userColors", JSON.stringify(colors));
@@ -123,7 +129,6 @@ export default function Users() {
         }
     };
 
-
     const getInitials = (name: string) => {
         const words = name.split(" ");
         const initials = words.map((word) => word[0]).join("").toUpperCase();
@@ -142,6 +147,10 @@ export default function Users() {
             "bg-teal-500",
         ];
         return colors[Math.floor(Math.random() * colors.length)];
+    };
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
     };
 
     return (
@@ -209,12 +218,20 @@ export default function Users() {
                 </div>
             </section>
 
+            <div className="flex justify-end">
+                <Link
+                    href="/tiago"
+                    className="text-blue-600 text-sm font-semibold underline"
+                >
+                    Ir para o Chat
+                </Link>
+            </div>
 
             <section className="rounded-lg p-6">
                 <div className="md:p-6">
                     {loading ? (
                         <p className="text-gray-700">Carregando dados...</p>
-                    ) : data.length > 0 ? (
+                    ) : paginatedData.length > 0 ? (
                         <>
                             <div className="grid grid-cols-7 p-4 text-black font-semibold border border-gray-400 rounded-t-lg">
                                 <p className="text-left">Usuário</p>
@@ -227,7 +244,7 @@ export default function Users() {
                             </div>
 
                             <div className="flex flex-col">
-                                {filteredData.map((item, index) => {
+                                {paginatedData.map((item, index) => {
                                     const initials = getInitials(item.username || "N/A");
                                     const color = item.username
                                         ? userColors[item.username] || "bg-gray-500"
@@ -241,6 +258,7 @@ export default function Users() {
                                             <div className="flex items-center gap-2">
                                                 <div
                                                     className={`flex items-center justify-center w-8 h-8 rounded-full text-white ${color}`}
+
                                                 >
                                                     {initials}
                                                 </div>
@@ -269,6 +287,38 @@ export default function Users() {
                     )}
                 </div>
             </section>
+
+            {totalPages > 1 && (
+                <div className="flex justify-center mt-4">
+                    <div className="flex items-center gap-2">
+                        {currentPage > 1 && (
+                            <button
+                                onClick={() => handlePageChange(currentPage - 1)}
+                                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                            >
+                                {"<"}
+                            </button>
+                        )}
+                        {[...Array(totalPages)].map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handlePageChange(index + 1)}
+                                className={`px-4 py-2 rounded-lg ${currentPage === index + 1 ? "bg-blue-600 text-white" : "bg-white text-blue-600 border border-blue-600"}`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+                        {currentPage < totalPages && (
+                            <button
+                                onClick={() => handlePageChange(currentPage + 1)}
+                                className="bg-blue-600 text-white px-4 py-2 rounded-lg"
+                            >
+                                {">"}
+                            </button>
+                        )}
+                    </div>
+                </div>
+            )}
 
             <Modal isOpen={isModalOpen} onClose={closeModal}>
                 {selectedUser && (
@@ -354,7 +404,7 @@ export default function Users() {
                                     />
                                 </div>
                             </div>
-                            <div className="">
+                            <div className="flex justify-end">
                                 <button
                                     type="submit"
                                     className="mr-2 text-gray-700 border text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-700"
@@ -375,4 +425,5 @@ export default function Users() {
             </Modal>
         </main>
     );
+
 }
