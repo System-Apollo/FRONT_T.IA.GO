@@ -19,13 +19,16 @@ export default function Navbar() {
 
     return (
         <nav>
-            <header className="flex items-center w-full fixed top-0 z-10 gap-2 p-3 text-zinc-900">
+            <header className="flex items-center w-full top-0 z-10 gap-2 p-3 text-zinc-900">
                 <div className="flex flex-row gap-2 items-center">
-                    <div className="p-2 rounded-lg bg-black">
-                        <MoveLeft className="text-white" />
-                    </div>
+                    {/* Ícone de Voltar (MoveLeft) com Link para a página anterior */}
                     <Link href="/">
-                        <button className=" hidden hover:bg-gray-200 md:p-1 rounded-lg duration-150">
+                        <div className="p-2 rounded-lg bg-black cursor-pointer">
+                            <MoveLeft className="text-white" />
+                        </div>
+                    </Link>
+                    <Link href="/">
+                        <button className="md:hidden hover:bg-gray-200 md:p-1 rounded-lg duration-150">
                             Voltar
                         </button>
                     </Link>
@@ -34,13 +37,12 @@ export default function Navbar() {
                 <div className="flex-grow flex items-center justify-center">
                     <div className="text-center font-medium">
                         <span className="text-sm md:text-lg text-gray-700">{weekday}, </span>
-                        <span className=" text-sm md:text-lg text-blue-800">{rest}</span>
+                        <span className="text-sm md:text-lg text-blue-800">{rest}</span>
                     </div>
                 </div>
 
                 <div className="w-12"></div>
             </header>
-
         </nav>
     );
 }
