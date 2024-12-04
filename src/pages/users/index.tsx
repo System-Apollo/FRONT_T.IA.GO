@@ -109,19 +109,24 @@ export default function Users() {
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (selectedUser && updatedUser) {
-            console.log(selectedUser, updatedUser);
             try {
+                // Converte "Ativo" e "Inativo" para valores booleanos antes do envio
+                const payload = {
+                    ...updatedUser,
+                    is_activity: updatedUser.is_activity === true, // Garante que seja um booleano
+                };
+    
                 const email = selectedUser.email || "";
                 if (email) {
-                    const response = await UpdateUser(email, updatedUser);
+                    const response = await UpdateUser(email, payload); // Envia o payload ajustado
                     console.log("Usuário atualizado:", response.data);
-
+    
                     setData((prevData) =>
                         prevData.map((user) =>
-                            user.email === selectedUser.email ? { ...user, ...updatedUser } : user
+                            user.email === selectedUser.email ? { ...user, ...payload } : user
                         )
                     );
-
+    
                     closeModal();
                 } else {
                     console.error("O e-mail do usuário está vazio ou indefinido.");
@@ -272,7 +277,7 @@ export default function Users() {
                                             <p className="text-center">
                                                 {String(item.is_activity).toLowerCase() === "true" ? "Ativo" : "Inativo"}
                                             </p>
-                                            <p className="text-center">{item.requests_used || 0}</p>
+                                            <p className="text-center">{item.used_requests || 0}</p>
                                             <p className="text-center">{item.limit_requests || 0}</p>
                                             <div className="flex justify-center">
                                                 <EllipsisVertical
@@ -341,7 +346,7 @@ export default function Users() {
                             <div className="flex gap-4 text-sm text-gray-500">
                                 <div>
                                     <strong>Requisições: </strong>
-                                    {selectedUser.requests_used || 0}
+                                    {selectedUser.used_requests || 0}
                                 </div>
                                 <div>
                                     <strong>Limites: </strong>
@@ -397,8 +402,8 @@ export default function Users() {
                                     <label className="block text-sm text-gray-600 font-medium mb-2">Requisições</label>
                                     <input
                                         type="number"
-                                        value={updatedUser.requests_used || ""}
-                                        onChange={(e) => handleInputChange("requests_used", e.target.value)}
+                                        value={updatedUser.used_requests || ""}
+                                        onChange={(e) => handleInputChange("used_requests", e.target.value)}
                                         className="w-full border border-gray-300 rounded-lg p-2 text-sm text-gray-600 text-center"
                                     />
                                 </div>
