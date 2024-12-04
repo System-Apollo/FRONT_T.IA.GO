@@ -89,7 +89,10 @@ export default function Users() {
 
     const openModal = (user: User) => {
         setSelectedUser(user);
-        setUpdatedUser(user);
+        setUpdatedUser({
+            ...user,
+            is_activity: String(user.is_activity).toLowerCase() === "true",
+        });
         setIsModalOpen(true);
     };
 
@@ -99,7 +102,7 @@ export default function Users() {
         setIsModalOpen(false);
     };
 
-    const handleInputChange = (field: keyof User, value: string) => {
+    const handleInputChange = (field: keyof User, value: string | boolean) => {
         setUpdatedUser((prev) => ({ ...prev, [field]: value }));
     };
 
@@ -154,10 +157,10 @@ export default function Users() {
     };
 
     return (
-        <main className="min-h-screen bg-gradient-to-tr from-[#B2C0FF] to-[#F6F6F6] pt-20 px-6">
+        <main className="min-h-screen bg-gradient-to-tr from-[#B2C0FF] to-[#F6F6F6] px-6">
             <Navbar />
 
-            <section className="mb-8">
+            <section className="mb-8 mt-10">
                 <h1 className="text-xl text-black font-semibold text-2xl mb-2">
                     Gerenciamento de Perfis
                 </h1>
@@ -377,12 +380,17 @@ export default function Users() {
                             </div>
                             <div className="mb-4">
                                 <label className="block text-sm text-gray-600 font-medium mb-2">Status</label>
-                                <input
-                                    type="text"
-                                    value={updatedUser.is_activity || ""}
-                                    onChange={(e) => handleInputChange("is_activity", e.target.value)}
+                                <select
+                                    value={updatedUser.is_activity ? "Ativo" : "Inativo"} // Usa booleano para definir o valor
+                                    onChange={(e) => {
+                                        const value = e.target.value === "Ativo";
+                                        handleInputChange("is_activity", value);
+                                    }}
                                     className="w-full border border-gray-300 rounded-lg p-2 text-sm text-gray-600"
-                                />
+                                >
+                                    <option value="Ativo">Ativo</option>
+                                    <option value="Inativo">Inativo</option>
+                                </select>
                             </div>
                             <div className="flex gap-4 text-sm text-gray-500 mb-4">
                                 <div className="flex-1">
