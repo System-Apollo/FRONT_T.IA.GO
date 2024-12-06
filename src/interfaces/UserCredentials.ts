@@ -7,6 +7,6 @@ export interface User{
     password?: string;
     cpf_cnpj?: string;
     is_activity?: boolean | undefined;
-    requests_used?: string;
+    used_requests?: string;
     limit_requests?: string;
 }
