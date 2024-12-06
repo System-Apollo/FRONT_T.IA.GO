@@ -6,8 +6,9 @@ import GetAllUsers from "@/utils/GetAllUsers";
 import UpdateUser from "@/utils/UpdateUser";
 import { User } from "@/interfaces/UserCredentials";
 import Link from "next/link";
+import withAuth from "@/components/auth/withAuth";
 
-export default function Users() {
+function Users() {
     const [data, setData] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -438,5 +439,6 @@ export default function Users() {
             </Modal>
         </main>
     );
-
 }
+
+export default withAuth(Users);
