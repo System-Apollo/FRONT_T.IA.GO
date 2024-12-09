@@ -38,8 +38,6 @@ const App: React.FC = () => {
   const [loadingDots, setLoadingDots] = useState<string>("");
   const [nomeUsuario, setNomeUsuario] = useState<string>("");
 
-
-  // Estados para controlar o efeito de digitação
   const [textoMensagem, setTextoMensagem] = useState<string>("");
   const saudacao = `Olá, ${nomeUsuario}`;
   const mensagem = "Como posso te ajudar hoje?";
@@ -70,11 +68,11 @@ const App: React.FC = () => {
     if (digitando) {
       const interval = setInterval(() => {
         setLoadingDots((prev) => (prev.length < 3 ? prev + "." : ""));
-      }, 500); // Intervalo para alternar os pontos
+      }, 500);
 
       return () => clearInterval(interval);
     } else {
-      setLoadingDots(""); // Reseta os pontos quando `digitando` for falso
+      setLoadingDots("");
     }
   }, [digitando]);
 
@@ -93,7 +91,6 @@ const App: React.FC = () => {
     }
   }, [conversas]);
 
-  // Scroll automático
   useEffect(() => {
     if (conversaRef.current) {
       conversaRef.current.scrollTo({
@@ -104,14 +101,12 @@ const App: React.FC = () => {
   }, [conversas]);
 
 
-  // Salvar conversas no localStorage sempre que forem atualizadas
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("conversas", JSON.stringify(conversas));
     }
   }, [conversas]);
 
-  // Scroll automático para a última conversa
   useEffect(() => {
     if (conversaRef.current) {
       conversaRef.current.scrollTo({
@@ -137,17 +132,14 @@ const App: React.FC = () => {
       const response = await api.ResponseApi({ pergunta });
       const respostaRecebida = response.data.resposta;
 
-      // Processar audiências e formatar resposta
       const audiencias = parseAudiencias(respostaRecebida);
 
-      // Atualizar conversa com audiências
       setDigitando(false);
       setConversas((prev) => [
         ...prev.slice(0, -1),
         { pergunta, resposta: audiencias.length > 0 ? "" : respostaRecebida, audiencias },
       ]);
 
-      // Adicionar gráfico se aplicável
       if (response.data.grafico) {
         const { dados, tipo } = configureGraficoData(response.data.grafico);
         if (dados) {
@@ -473,10 +465,8 @@ const App: React.FC = () => {
         <meta name="description" content="Plataforma de chat interativo com visualização de dados e gráficos" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      {/* Tela de saudação ocupando toda a área sem scroll */}
       {mostrarSaudacao ? (
         <div className="fixed inset-0 flex flex-col items-center justify-center overflow-hidden">
-          {/* Header fixo no topo da tela */}
           <header className="flex items-center w-full bg-chat fixed top-0 z-10 justify-between gap-2 p-3 text-zinc-900">
             <div className="flex flex-row gap-2 items-center">
               <ArrowLeft />
@@ -490,7 +480,6 @@ const App: React.FC = () => {
             </div>
           </header>
 
-          {/* Conteúdo de saudação centralizado */}
           <div className="flex flex-col items-center mt-16">
             <h2 className="text-3xl md:text-4xl font-semibold text-blue-800">{saudacao}</h2>
             <h2 className="text-3xl md:text-4xl text-center font-semibold text-zinc-800">{textoMensagem}</h2>
@@ -498,7 +487,6 @@ const App: React.FC = () => {
         </div>
       ) : (
         <>
-          {/* Header fixo no topo na tela principal */}
           <header className="flex items-center flex-row justify-between w-full gap-2 p-3 text-zinc-900 fixed top-0 z-10 bg-chat">
             <div className="flex flex-row gap-2 items-center">
               <ArrowLeft />
@@ -512,7 +500,6 @@ const App: React.FC = () => {
             </div>
           </header>
 
-          {/* Conteúdo principal abaixo do header fixo */}
           <div className="flex flex-col w-full max-w-1/2 items-center flex-grow pt-16 overflow-auto">
             <div
               ref={conversaRef}
@@ -525,14 +512,12 @@ const App: React.FC = () => {
             >
               {conversas.map((conversa, index) => (
                 <div key={index} className="mb-4">
-                  {/* Pergunta do usuário */}
                   <div className="flex justify-end">
                     <p className="text-zinc-600 text-start font-medium bg-slate-200 p-2 rounded-lg max-w-sm text-right">
                       {conversa.pergunta}
                     </p>
                   </div>
 
-                  {/* Resposta da API */}
                   {conversa.audiencias && conversa.audiencias.length > 0 ? (
                     <div className="mt-4 space-y-4">
                       {conversa.audiencias.map((audiencia, idx) => (
@@ -562,7 +547,6 @@ const App: React.FC = () => {
                   )}
                 </div>
               ))}
-              {/* Exibir o gráfico somente se mostrarGrafico for true */}
               {mostrarGrafico && dadosGrafico && dadosGrafico.labels && (
                 <div className="mt-10 w-full max-w-lg h-64 translate-y-[-10%] translate-x-[20%]">
                   <Bar data={dadosGrafico} options={options} />
@@ -573,7 +557,6 @@ const App: React.FC = () => {
         </>
       )}
 
-      {/* Input fixo no rodapé, sempre visível */}
       <div className="fixed text-gray-600 flex flex-row items-center bottom-0 bg-chat left-1/2 transform -translate-x-1/2 w-full md:w-1/2 p-4 flex gap-2">
         <input
           name="pergunta"
