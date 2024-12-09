@@ -19,7 +19,7 @@ export default function Registro() {
     const [formData, setFormData] = useState({
         name: "",
         last_name: "",
-        company: "",
+        company_name: "",
         cpf_cnpj: "",
         email: "",
         password: "",
@@ -45,7 +45,7 @@ export default function Registro() {
             const response = await registerUser({
                 name: formData.name,
                 last_name: formData.last_name,
-                company: formData.company,
+                company_name: formData.company_name,
                 email: formData.email,
                 password: formData.password,
                 cpf_cnpj: formData.cpf_cnpj
@@ -127,10 +127,10 @@ export default function Registro() {
                                     <label className="font-medium">Empresa</label>
                                     <input
                                         type="text"
-                                        name="company"
+                                        name="company_name"
                                         required
                                         className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-blue-700 shadow-sm rounded-lg"
-                                        value={formData.company}
+                                        value={formData.company_name}
                                         onChange={handleChange}
                                     />
                                 </div>
@@ -283,7 +283,7 @@ export default function Registro() {
                             <li>Você não terá mais acesso à IA.</li>
                         </ul>
                         <p className="mt-4">Para continuar usando nossos serviços, será necessário entrar em contato com nossa empresa e solicitar um plano para ativar uma conta paga.</p>
-                        <p className="mt-4">Quer continuar? Clique em &quot<strong>Confirmar</strong>&quot e faça login para iniciar seu teste grátis.</p>
+                        <p className="mt-4">Quer continuar? Clique em <strong>"Confirmar"</strong> e faça login para iniciar seu teste grátis.</p>
                     </>
                 }
                 buttonText="Confirmar"
