@@ -8,13 +8,10 @@ import UploadModal from "@/components/uploadModal";
 import { Upload } from "lucide-react";
 
 function Panel() {
-    const [data, setData] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const [barChartData, setBarChartData] = useState<any>(null);
     const [pieChartData, setPieChartData] = useState<any>(null);
     const [lineChartData, setLineChartData] = useState<any>(null);
-    const [radarChartData, setRadarChartData] = useState<any>(null);
-    const [polarChartData, setPolarChartData] = useState<any>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -22,8 +19,6 @@ function Panel() {
             try {
                 const response = await GetAllUsers();
                 const users = response.data.users;
-
-                setData(users);
 
                 const activeUsers = users.filter((user: User) => String(user.is_activity).toLowerCase() === "true").length;
                 const inactiveUsers = users.length - activeUsers;
@@ -82,47 +77,6 @@ function Panel() {
                         },
                     ],
                 });
-
-                setRadarChartData({
-                    labels: companyLabels,
-                    datasets: [
-                        {
-                            label: "Limites",
-                            data: limitData,
-                            backgroundColor: "rgba(33, 150, 243, 0.2)",
-                            borderColor: "#2196f3",
-                            borderWidth: 1,
-                        },
-                        {
-                            label: "Usados",
-                            data: usedData,
-                            backgroundColor: "rgba(244, 67, 54, 0.2)",
-                            borderColor: "#f44336",
-                            borderWidth: 1,
-                        },
-                    ],
-                });
-
-                setPolarChartData({
-                    labels: companyLabels,
-                    datasets: [
-                        {
-                            label: "Proporção de Limites Usados",
-                            data: companyLabels.map((_, index) =>
-                                limitData[index] > 0 ? (usedData[index] / limitData[index]) * 100 : 0
-                            ),
-                            backgroundColor: [
-                                "#ff6384",
-                                "#36a2eb",
-                                "#cc65fe",
-                                "#ffce56",
-                                "#ff9f40",
-                                "#4bc0c0",
-                                "#9966ff",
-                            ],
-                        },
-                    ],
-                });
             } catch (error) {
                 console.error("Erro ao buscar dados:", error);
             } finally {
@@ -159,9 +113,7 @@ function Panel() {
                     <p className="text-gray-700">Carregando dados...</p>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-8">
-                        {/* Coluna Esquerda */}
                         <div className="flex flex-col items-center space-y-2">
-                            {/*Gráfico de Pizza*/}
                             <div className="flex flex-col items-center">
                                 <h2 className="text-lg font-semibold text-black mb-4 text-center">
                                     Distribuição de Status
@@ -170,8 +122,6 @@ function Panel() {
                                     <Graph type="pie" data={pieChartData} />
                                 </div>
                             </div>
-
-                            {/* Gráfico de Barras */}
                             <div className="w-3/4">
                                 <h2 className="text-lg font-semibold text-black mb-4 text-center">
                                     Usuários Ativos/Inativos
@@ -179,10 +129,7 @@ function Panel() {
                                 <Graph type="bar" data={barChartData} />
                             </div>
                         </div>
-
-                        {/* Coluna Direita */}
                         <div className="space-y-8">
-                            {/* Gráfico de Linha */}
                             <div className="w-full mx-auto">
                                 <h2 className="text-lg font-semibold text-black mb-4 text-center">
                                     Limites vs. Usados por Empresa
@@ -191,14 +138,12 @@ function Panel() {
                                     <Graph type="line" data={lineChartData} />
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 )}
             </section>
 
             <UploadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-                
         </main>
     );
 }
