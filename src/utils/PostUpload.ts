@@ -16,6 +16,7 @@ export const uploadFile = async (file: File, company: string, confirm: boolean):
             headers: {
                 'Authorization': token ? `Bearer ${token}` : '',
                 "Content-Type": "multipart/form-data",
+                "ngrok-skip-browser-warning": "69420",
             },
         });
 
