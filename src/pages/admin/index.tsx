@@ -192,41 +192,13 @@ function Panel() {
                                 </div>
                             </div>
 
-                            {/* Gráficos de Radar e Polar Area */}
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <h2 className="text-lg font-semibold text-black mb-4 text-center">
-                                        Radar de Limites e Usados
-                                    </h2>
-                                    <div className="w-80 h-80">
-                                        <Graph type="radar" data={radarChartData} />
-                                    </div>
-                                </div>
-                                <div>
-                                    <h2 className="text-lg font-semibold text-black mb-4 text-center">
-                                        Proporção de Limites Usados
-                                    </h2>
-                                    <div className="w-80 h-80">
-                                        <Graph type="polarArea" data={polarChartData} />
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 )}
             </section>
-            {/* Lista de Empresas */}
-            <section className="mt-6">
-                <h2 className="text-lg font-semibold mb-4">Lista de Empresas</h2>
-                <ul className="list-disc pl-6">
-                    {data.map((user, index) => (
-                        <li key={index} className="text-gray-700">
-                            Empresa: {user.company_name} - Usuário: {user.username}
-                        </li>
-                    ))}
-                </ul>
-            </section>
+
             <UploadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                
         </main>
     );
 }
