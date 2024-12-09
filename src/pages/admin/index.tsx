@@ -4,6 +4,8 @@ import Navbar from "@/components/navbar";
 import { User } from "@/interfaces/UserCredentials";
 import GetAllUsers from "@/utils/GetAllUsers";
 import { useEffect, useState } from "react";
+import UploadModal from "@/components/uploadModal";
+import { Upload } from "lucide-react";
 
 function Panel() {
     const [data, setData] = useState<User[]>([]);
@@ -13,6 +15,7 @@ function Panel() {
     const [lineChartData, setLineChartData] = useState<any>(null);
     const [radarChartData, setRadarChartData] = useState<any>(null);
     const [polarChartData, setPolarChartData] = useState<any>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -22,7 +25,6 @@ function Panel() {
 
                 setData(users);
 
-                // Dados para o gráfico de barras (usuários ativos/inativos)
                 const activeUsers = users.filter((user: User) => String(user.is_activity).toLowerCase() === "true").length;
                 const inactiveUsers = users.length - activeUsers;
 
@@ -37,7 +39,6 @@ function Panel() {
                     ],
                 });
 
-                // Dados para o gráfico de pizza (percentual de status)
                 setPieChartData({
                     labels: ["Ativos", "Inativos"],
                     datasets: [
@@ -50,7 +51,6 @@ function Panel() {
                     ],
                 });
 
-                // Dados para o gráfico de linha (limites vs. usados por empresa)
                 const companyLabels = Array.from(new Set(users.map((user: any) => user.company_name))).filter(Boolean);
                 const limitData = companyLabels.map((company) =>
                     users
@@ -83,7 +83,6 @@ function Panel() {
                     ],
                 });
 
-                // Dados para o gráfico de radar
                 setRadarChartData({
                     labels: companyLabels,
                     datasets: [
@@ -104,7 +103,6 @@ function Panel() {
                     ],
                 });
 
-                // Dados para o gráfico de Polar Area
                 setPolarChartData({
                     labels: companyLabels,
                     datasets: [
@@ -139,12 +137,22 @@ function Panel() {
         <main className="min-h-screen bg-gradient-to-tr from-[#B2C0FF] to-[#F6F6F6] px-6">
             <Navbar />
             <section className="mb-8 mt-10">
-                <h1 className="text-xl text-black font-semibold text-2xl mb-2">
-                    Gerenciamento de Perfis
-                </h1>
-                <p className="text-sm md:text-lg text-gray-700">
-                    Visualize dados sobre usuários e empresas de forma eficiente.
-                </p>
+                <div className="flex justify-between items-center">
+                    <div>
+                        <h1 className="text-xl text-black font-semibold text-2xl mb-2">
+                            Gerenciamento de Perfis
+                        </h1>
+                        <p className="text-sm md:text-lg text-gray-700">
+                            Visualize dados sobre usuários e empresas de forma eficiente.
+                        </p>
+                    </div>
+                    <button
+                        className="flex px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        <Upload /> Upload
+                    </button>
+                </div>
             </section>
             <section className="rounded-lg p-6">
                 {loading ? (
@@ -153,7 +161,7 @@ function Panel() {
                     <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-8">
                         {/* Coluna Esquerda */}
                         <div className="flex flex-col items-center space-y-2">
-                            {/* Gráfico de Pizza (Centralizado) */}
+                            {/*Gráfico de Pizza*/}
                             <div className="flex flex-col items-center">
                                 <h2 className="text-lg font-semibold text-black mb-4 text-center">
                                     Distribuição de Status
@@ -163,7 +171,7 @@ function Panel() {
                                 </div>
                             </div>
 
-                            {/* Gráfico de Barras (Reduzido) */}
+                            {/* Gráfico de Barras */}
                             <div className="w-3/4">
                                 <h2 className="text-lg font-semibold text-black mb-4 text-center">
                                     Usuários Ativos/Inativos
@@ -174,7 +182,7 @@ function Panel() {
 
                         {/* Coluna Direita */}
                         <div className="space-y-8">
-                            {/* Gráfico de Linha (Aumentado) */}
+                            {/* Gráfico de Linha */}
                             <div className="w-full mx-auto">
                                 <h2 className="text-lg font-semibold text-black mb-4 text-center">
                                     Limites vs. Usados por Empresa
@@ -186,31 +194,39 @@ function Panel() {
 
                             {/* Gráficos de Radar e Polar Area */}
                             <div className="grid grid-cols-2 gap-4">
-                                {/* Gráfico de Radar (Aumentado) */}
-                                {/* <div>
+                                <div>
                                     <h2 className="text-lg font-semibold text-black mb-4 text-center">
                                         Radar de Limites e Usados
                                     </h2>
                                     <div className="w-80 h-80">
                                         <Graph type="radar" data={radarChartData} />
                                     </div>
-                                </div> */}
-
-                                {/* Gráfico de Polar Area (Aumentado) */}
-                                {/* <div>
+                                </div>
+                                <div>
                                     <h2 className="text-lg font-semibold text-black mb-4 text-center">
                                         Proporção de Limites Usados
                                     </h2>
                                     <div className="w-80 h-80">
                                         <Graph type="polarArea" data={polarChartData} />
                                     </div>
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                     </div>
                 )}
             </section>
-
+            {/* Lista de Empresas */}
+            <section className="mt-6">
+                <h2 className="text-lg font-semibold mb-4">Lista de Empresas</h2>
+                <ul className="list-disc pl-6">
+                    {data.map((user, index) => (
+                        <li key={index} className="text-gray-700">
+                            Empresa: {user.company_name} - Usuário: {user.username}
+                        </li>
+                    ))}
+                </ul>
+            </section>
+            <UploadModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </main>
     );
 }
