@@ -6,6 +6,7 @@ import GetAllUsers from "@/utils/GetAllUsers";
 import { useEffect, useState } from "react";
 import UploadModal from "@/components/uploadModal";
 import { Upload } from "lucide-react";
+import Link from "next/link";
 
 function Panel() {
     const [loading, setLoading] = useState(true);
@@ -107,6 +108,15 @@ function Panel() {
                         <Upload /> Upload
                     </button>
                 </div>
+
+                <div className="flex justify-end mt-5">
+                <Link
+                    href="/users"
+                    className="text-blue-600 text-sm font-semibold underline"
+                >
+                    Ir para o pagina de usuários
+                </Link>
+            </div>
             </section>
             <section className="rounded-lg p-6">
                 {loading ? (
