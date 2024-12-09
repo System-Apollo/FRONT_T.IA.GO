@@ -19,7 +19,7 @@ function Users() {
     const [selectedStatus, setSelectedStatus] = useState<string>("all");
     const [selectedCompany, setSelectedCompany] = useState<string>("all");
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(6); // Número de itens por página
+    const [itemsPerPage] = useState(6);
 
     const filterData = () => {
         return data
@@ -111,15 +111,14 @@ function Users() {
         e.preventDefault();
         if (selectedUser && updatedUser) {
             try {
-                // Converte "Ativo" e "Inativo" para valores booleanos antes do envio
                 const payload = {
                     ...updatedUser,
-                    is_activity: updatedUser.is_activity === true, // Garante que seja um booleano
+                    is_activity: updatedUser.is_activity === true,
                 };
     
                 const email = selectedUser.email || "";
                 if (email) {
-                    const response = await UpdateUser(email, payload); // Envia o payload ajustado
+                    const response = await UpdateUser(email, payload);
                     console.log("Usuário atualizado:", response.data);
     
                     setData((prevData) =>
@@ -233,6 +232,15 @@ function Users() {
                     className="text-blue-600 text-sm font-semibold underline"
                 >
                     Ir para o Chat
+                </Link>
+            </div>
+
+            <div className="flex justify-end mt-5">
+                <Link
+                    href="/admin"
+                    className="text-blue-600 text-sm font-semibold underline"
+                >
+                    Ir para o pagina admin
                 </Link>
             </div>
 
@@ -387,7 +395,7 @@ function Users() {
                             <div className="mb-4">
                                 <label className="block text-sm text-gray-600 font-medium mb-2">Status</label>
                                 <select
-                                    value={updatedUser.is_activity ? "Ativo" : "Inativo"} // Usa booleano para definir o valor
+                                    value={updatedUser.is_activity ? "Ativo" : "Inativo"}
                                     onChange={(e) => {
                                         const value = e.target.value === "Ativo";
                                         handleInputChange("is_activity", value);
