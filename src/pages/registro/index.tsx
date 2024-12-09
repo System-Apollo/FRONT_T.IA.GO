@@ -283,7 +283,9 @@ export default function Registro() {
                             <li>Você não terá mais acesso à IA.</li>
                         </ul>
                         <p className="mt-4">Para continuar usando nossos serviços, será necessário entrar em contato com nossa empresa e solicitar um plano para ativar uma conta paga.</p>
-                        <p className="mt-4">Quer continuar? Clique em <strong>"Confirmar"</strong> e faça login para iniciar seu teste grátis.</p>
+                        <p className="mt-4">Quer continuar? Clique em <strong>&quot;Confirmar&quot;</strong> e faça login para iniciar seu teste grátis.</p>
+
+
                     </>
                 }
                 buttonText="Confirmar"
