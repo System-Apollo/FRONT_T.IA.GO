@@ -226,14 +226,14 @@ function Users() {
 
                     <Link
                         href="/tiago"
-                        className="text-blue-600 text-sm font-semibold bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"
+                        className="flex px-3 py-2 bg-blue-500 text-white rounded-lg ml-4 hover:bg-blue-600"
                     >
                         Chat
                     </Link>
 
                     <Link
                         href="/admin"
-                        className="text-blue-600 text-sm font-semibold bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"
+                        className="flex px-3 py-2 bg-blue-500 text-white rounded-lg ml-4 hover:bg-blue-600"
                     >
                         Dashboard
                     </Link>
