@@ -7,6 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import withAuth from "@/components/auth/withAuth";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -41,6 +42,14 @@ const App: React.FC = () => {
   const [textoMensagem, setTextoMensagem] = useState<string>("");
   const saudacao = `Olá, ${nomeUsuario}`;
   const mensagem = "Como posso te ajudar hoje?";
+
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove o token
+    console.log("Token removido do localStorage"); // Mensagem de depuração
+    router.push("/"); // Redireciona para a página inicial
+  };
 
   useEffect(() => {
     const usuario = localStorage.getItem("username") || "Fulana";
@@ -488,11 +497,10 @@ const App: React.FC = () => {
       {mostrarSaudacao ? (
         <div className="fixed inset-0 flex flex-col items-center justify-center overflow-hidden">
           <header className="flex items-center w-full bg-chat fixed top-0 z-10 justify-between gap-2 p-3 text-zinc-900">
-            <div className="flex flex-row gap-2 items-center">
-              <ArrowLeft />
-              <Link href="/">
-                <button className="hover:bg-gray-200 p-2 rounded-lg duration-150">Voltar</button>
-              </Link>
+          <div className="flex flex-row gap-2 items-center">
+              <button onClick={handleLogout} className="p-2 rounded-lg bg-black cursor-pointer">
+                <ArrowLeft className="text-white" />
+              </button>
             </div>
             <Image src={'/logoTIAGO.svg'} width={90} height={90} alt="MF name" />
             <div className="bg-gray-300 p-1 rounded-lg">
