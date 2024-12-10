@@ -226,16 +226,16 @@ function Users() {
 
                     <Link
                         href="/tiago"
-                        className="text-blue-600 text-sm font-semibold bg-blue-600 text-white p-2 rounded-lg"
+                        className="text-blue-600 text-sm font-semibold bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"
                     >
-                        Ir para o Chat
+                        Chat
                     </Link>
 
                     <Link
                         href="/admin"
-                        className="text-blue-600 text-sm font-semibold bg-blue-600 text-white p-2 rounded-lg"
+                        className="text-blue-600 text-sm font-semibold bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"
                     >
-                        Ir para o pagina admin
+                        Dashboard
                     </Link>
 
                 </div>
