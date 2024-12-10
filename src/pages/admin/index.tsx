@@ -21,7 +21,6 @@ function Panel() {
                 const response = await GetAllUsers();
                 const users = response.data.users;
 
-                // Agrupar usuários por empresa
                 const companies = users.reduce((acc: Record<string, number>, user: User) => {
                     const companyName = user.company_name || "Não Informado";
                     acc[companyName] = (acc[companyName] || 0) + 1;
@@ -33,7 +32,7 @@ function Panel() {
                         {
                             label: "Quantidade de Usuários",
                             data: Object.values(companies),
-                            backgroundColor: "#4caf50",
+                            backgroundColor: ["#1FB4D3", "#4CAF50", "#FFC107", "#E91E63"],
                         },
                     ],
                 });
