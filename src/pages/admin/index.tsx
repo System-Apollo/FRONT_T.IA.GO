@@ -21,19 +21,26 @@ function Panel() {
                 const response = await GetAllUsers();
                 const users = response.data.users;
 
-                const activeUsers = users.filter((user: User) => String(user.is_activity).toLowerCase() === "true").length;
-                const inactiveUsers = users.length - activeUsers;
-
+                // Agrupar usuários por empresa
+                const companies = users.reduce((acc: Record<string, number>, user: User) => {
+                    const companyName = user.company_name || "Não Informado";
+                    acc[companyName] = (acc[companyName] || 0) + 1;
+                    return acc;
+                }, {});
                 setBarChartData({
-                    labels: ["Ativos", "Inativos"],
+                    labels: Object.keys(companies),
                     datasets: [
                         {
-                            label: "Usuários",
-                            data: [activeUsers, inactiveUsers],
-                            backgroundColor: ["#4caf50", "#f44336"],
+                            label: "Quantidade de Usuários",
+                            data: Object.values(companies),
+                            backgroundColor: "#4caf50",
                         },
                     ],
                 });
+
+                // Dados do gráfico de pizza
+                const activeUsers = users.filter((user: User) => String(user.is_activity).toLowerCase() === "true").length;
+                const inactiveUsers = users.length - activeUsers;
 
                 setPieChartData({
                     labels: ["Ativos", "Inativos"],
@@ -46,7 +53,6 @@ function Panel() {
                         },
                     ],
                 });
-
                 const companyLabels = Array.from(new Set(users.map((user: any) => user.company_name))).filter(Boolean);
                 const limitData = companyLabels.map((company) =>
                     users
@@ -136,9 +142,9 @@ function Panel() {
                             </div>
                             <div className="w-3/4">
                                 <h2 className="text-lg font-semibold text-black mb-4 text-center">
-                                    Usuários Ativos/Inativos
+                                    Usuários por Empresa
                                 </h2>
-                                <Graph type="bar" data={barChartData} />
+                                <Graph type="bar" data={barChartData} options={{ indexAxis: "y" }} />
                             </div>
                         </div>
                         <div className="space-y-8">
