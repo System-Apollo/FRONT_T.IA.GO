@@ -183,7 +183,7 @@ export default function Login() {
                 iconError={true}
             />
             <AlertDialog403
-                title="Erro ao fazer login"
+                title="Conta Inativa"
                 text="Não foi possível fazer login. Entre em contato com o suporte para ativar sua conta."
                 buttonText="Entendi"
                 onClick={() => { setShow403Dialog(false) }}
