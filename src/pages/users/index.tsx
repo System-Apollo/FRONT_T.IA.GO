@@ -115,18 +115,18 @@ function Users() {
                     ...updatedUser,
                     is_activity: updatedUser.is_activity === true,
                 };
-    
+
                 const email = selectedUser.email || "";
                 if (email) {
                     const response = await UpdateUser(email, payload);
                     console.log("Usuário atualizado:", response.data);
-    
+
                     setData((prevData) =>
                         prevData.map((user) =>
                             user.email === selectedUser.email ? { ...user, ...payload } : user
                         )
                     );
-    
+
                     closeModal();
                 } else {
                     console.error("O e-mail do usuário está vazio ou indefinido.");
@@ -223,26 +223,30 @@ function Users() {
                     >
                         Limpar filtros
                     </button>
+
+                    <Link
+                        href="/tiago"
+                        className="text-blue-600 text-sm font-semibold bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"
+                    >
+                        Chat
+                    </Link>
+
+                    <Link
+                        href="/admin"
+                        className="text-blue-600 text-sm font-semibold bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700"
+                    >
+                        Dashboard
+                    </Link>
+
                 </div>
+
+                <div className="flex justify-end mt-5">
+                </div>
+                
             </section>
 
-            <div className="flex justify-end">
-                <Link
-                    href="/tiago"
-                    className="text-blue-600 text-sm font-semibold underline"
-                >
-                    Ir para o Chat
-                </Link>
-            </div>
 
-            <div className="flex justify-end mt-5">
-                <Link
-                    href="/admin"
-                    className="text-blue-600 text-sm font-semibold underline"
-                >
-                    Ir para o pagina admin
-                </Link>
-            </div>
+
 
             <section className="rounded-lg p-6">
                 <div className="md:p-6">

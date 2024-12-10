@@ -101,22 +101,24 @@ function Panel() {
                             Visualize dados sobre usuários e empresas de forma eficiente.
                         </p>
                     </div>
+                    <div className="flex">
+                    <Link
+                        href="/users"
+                        className="text-blue-600 text-sm font-semibold text-white bg-blue-500 p-2 rounded-lg hover:bg-blue-600"
+                    >
+                        Admin
+                    </Link>
                     <button
-                        className="flex px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                        className="flex px-3 py-2 bg-blue-500 text-white rounded-lg ml-4 hover:bg-blue-600"
                         onClick={() => setIsModalOpen(true)}
                     >
                         <Upload /> Upload
                     </button>
+                    </div>
                 </div>
 
                 <div className="flex justify-end mt-5">
-                <Link
-                    href="/users"
-                    className="text-blue-600 text-sm font-semibold underline"
-                >
-                    Ir para o pagina de usuários
-                </Link>
-            </div>
+                </div>
             </section>
             <section className="rounded-lg p-6">
                 {loading ? (
