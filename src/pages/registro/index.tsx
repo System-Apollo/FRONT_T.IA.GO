@@ -14,6 +14,7 @@ export default function Registro() {
     const [showAlertDialog, setShowAlertDialog] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+    const [passwordError, setPasswordError] = useState<string | null>(null);
     const router = useRouter();
 
     const [formData, setFormData] = useState({
@@ -31,11 +32,20 @@ export default function Registro() {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
+    const handlePasswordValidation = () => {
+        if (formData.password !== formData.confirmPassword) {
+            setPasswordError("As senhas não coincidem.");
+        } else {
+            setPasswordError(null);
+        }
+    };
+
     const handleSubmit = async (e: any) => {
         e.preventDefault();
 
+        // Validar senhas antes de continuar
         if (formData.password !== formData.confirmPassword) {
-            setShowAlertDialog(true);
+            setPasswordError("As senhas não coincidem.");
             return;
         }
 
@@ -51,14 +61,12 @@ export default function Registro() {
                 cpf_cnpj: formData.cpf_cnpj
             });
             console.log("Login bem sucedido:", response.data);
-            // alert(response.data.message);
             setShowModal(true);
         } catch (error) {
             console.error("Erro ao cadastrar:", error);
             setShowAlertDialog(true);
         }
     };
-
     const handleClickConfirm = () => {
         setShowModal(false);
         router.push("/login");
@@ -214,9 +222,10 @@ export default function Registro() {
                                 <input
                                     name="confirmPassword"
                                     type={isConfirmPasswordVisible ? "text" : "password"}
-                                    className="py-2 ps-4 pe-10 block w-full text-gray-500 bg-transparent outline-none border focus:border-blue-700 shadow-sm rounded-lg"
+                                    className={`py-2 ps-4 pe-10 block w-full text-gray-500 bg-transparent outline-none border ${passwordError ? "border-red-500" : "focus:border-blue-700"} shadow-sm rounded-lg`}
                                     value={formData.confirmPassword}
                                     onChange={handleChange}
+                                    onBlur={handlePasswordValidation} // Valida ao sair do campo
                                 />
                                 <button
                                     type="button"
@@ -258,6 +267,9 @@ export default function Registro() {
                                     )}
                                 </button>
                             </div>
+                            {passwordError && (
+                                <p className="text-red-500 text-sm mt-2">{passwordError}</p>
+                            )}
                         </div>
                         <button
                             className="w-full px-4 py-2 text-white font-medium bg-blue-700 hover:bg-blue-600 active:bg-blue-600 rounded-lg duration-150"

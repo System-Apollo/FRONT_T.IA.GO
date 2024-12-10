@@ -17,20 +17,19 @@ export default function Navbar() {
 
     const { weekday, rest } = formatDate();
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        console.log("Token removido do localStorage");
+    };
+
     return (
         <nav>
             <header className="flex items-center w-full top-0 z-10 gap-2 p-3 text-zinc-900">
                 <div className="flex flex-row gap-2 items-center">
-                    {/* Ícone de Voltar (MoveLeft) com Link para a página anterior */}
-                    <Link href="/">
+                    <Link href="/" onClick={handleLogout}>
                         <div className="p-2 rounded-lg bg-black cursor-pointer">
                             <MoveLeft className="text-white" />
                         </div>
-                    </Link>
-                    <Link href="/">
-                        <button className="md:hidden hover:bg-gray-200 md:p-1 rounded-lg duration-150">
-                            Voltar
-                        </button>
                     </Link>
                 </div>
 
