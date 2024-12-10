@@ -110,9 +110,9 @@ function Panel() {
                     <div className="flex">
                     <Link
                         href="/users"
-                        className="text-blue-600 text-sm font-semibold text-white bg-blue-500 p-2 rounded-lg hover:bg-blue-600"
+                        className="flex px-3 py-2 bg-blue-500 text-white rounded-lg ml-4 hover:bg-blue-600"
                     >
-                        Admin
+                        Perfis
                     </Link>
                     <button
                         className="flex px-3 py-2 bg-blue-500 text-white rounded-lg ml-4 hover:bg-blue-600"
