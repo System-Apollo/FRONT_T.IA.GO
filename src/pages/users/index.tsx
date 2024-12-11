@@ -7,6 +7,7 @@ import UpdateUser from "@/utils/UpdateUser";
 import { User } from "@/interfaces/UserCredentials";
 import Link from "next/link";
 import withAuth from "@/components/auth/withAuth";
+import NotificationModal from "@/components/modalConfirmEdit";
 
 function Users() {
     const [data, setData] = useState<User[]>([]);
@@ -20,6 +21,12 @@ function Users() {
     const [selectedCompany, setSelectedCompany] = useState<string>("all");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(6);
+    const [notificationModal, setNotificationModal] = useState({
+        isOpen: false,
+        title: "",
+        message: "",
+        isSuccess: true,
+    });
 
     const filterData = () => {
         return data
@@ -107,6 +114,10 @@ function Users() {
         setUpdatedUser((prev) => ({ ...prev, [field]: value }));
     };
 
+    const closeNotificationModal = () => {
+        setNotificationModal((prev) => ({ ...prev, isOpen: false }));
+    };
+
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (selectedUser && updatedUser) {
@@ -128,11 +139,26 @@ function Users() {
                     );
 
                     closeModal();
+
+                    setNotificationModal({
+                        isOpen: true,
+                        title: "Sucesso",
+                        message: "O usuário foi atualizado com sucesso.",
+                        isSuccess: true,
+                    });
                 } else {
                     console.error("O e-mail do usuário está vazio ou indefinido.");
                 }
             } catch (error) {
                 console.error("Erro ao atualizar usuário:", error);
+
+                // Exibir modal de erro
+                setNotificationModal({
+                    isOpen: true,
+                    title: "Erro",
+                    message: "Ocorreu um erro ao atualizar o usuário. Por favor, tente novamente.",
+                    isSuccess: false,
+                });
             }
         }
     };
@@ -242,7 +268,7 @@ function Users() {
 
                 <div className="flex justify-end mt-5">
                 </div>
-                
+
             </section>
 
 
@@ -432,8 +458,8 @@ function Users() {
                             </div>
                             <div className="flex justify-end">
                                 <button
-                                    type="submit"
-                                    className="mr-2 text-gray-700 border text-sm font-semibold px-4 py-2 rounded-lg hover:bg-blue-700"
+                                    onClick={closeModal}
+                                    className="mr-2 text-gray-700 border text-sm font-semibold px-4 py-2 rounded-lg hover:bg-gray-200"
                                 >
                                     Cancelar
                                 </button>
@@ -449,6 +475,13 @@ function Users() {
                     </div>
                 )}
             </Modal>
+                <NotificationModal
+                    isOpen={notificationModal.isOpen}
+                    onClose={closeNotificationModal}
+                    title={notificationModal.title}
+                    message={notificationModal.message}
+                    isSuccess={notificationModal.isSuccess}
+                />
         </main>
     );
 }
