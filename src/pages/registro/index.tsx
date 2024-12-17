@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logoMF from "../../../public/logoMfDigital.svg"
+import logoMF from "../../../public/mfdigitallaw2.svg"
 import { useState } from "react";
 import { registerUser } from './../../utils/PostReigisterUser';
 import Link from "next/link";
