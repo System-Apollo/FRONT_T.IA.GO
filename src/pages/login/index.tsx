@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logoMF from "../../../public/logoMfDigital.svg";
+import logoMF from "../../../public/mfdigitallaw2.svg";
 import logoTIAGO from "../../../public/logoTIAGO.svg"
 import Link from "next/link";
 import { useState } from "react";
@@ -75,8 +75,8 @@ export default function Login() {
                     </Link>
                 </div>
                 <div className="relative z-10 w-full max-w-md">
-                    <Image src={logoMF} width={250} height={250} alt="logo" />
-                    <div className=" mt-16 space-y-3">
+                    <Image src={logoMF} width={250} height={200} alt="logo" />
+                    <div className=" mt-6 space-y-3">
                         <h3 className="text-white text-3xl font-semibold">Comece agora a potencializar suas análises</h3>
                         <p className="text-gray-300">
                             Entre com sua conta para ter acesso aos nossos benefícios ou crie uma nova conta e teste grátis por 7 dias.

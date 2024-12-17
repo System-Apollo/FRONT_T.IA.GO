@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 md:px-8 py-4 flex justify-between items-center h-16">
         {/* Logo */}
         <div className="flex-shrink-0">
-          <Image src="/mfdigitallaw.svg" alt="Logo" width={160} height={50} />
+          <Image src="mfdigitallaw2.svg" alt="Logo" width={160} height={50} />
         </div>
 
         {/* Navegação em telas grandes com espaçamento adicional */}
